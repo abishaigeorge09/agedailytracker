@@ -1,62 +1,38 @@
-const CACHE_NAME = 'cmd-center-v1';
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
-];
+const CACHE_NAME = 'cmd-center-session';
 
-// Install: cache static assets
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
-  );
-  self.skipWaiting();
-});
+// Install: activate immediately, no pre-caching
+self.addEventListener('install', () => self.skipWaiting());
 
-// Activate: clean old caches
+// Activate: claim clients, clear any old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+      Promise.all(keys.map((k) => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch: stale-while-revalidate for data.json, cache-first for static
+// Fetch: network-first, cache only as offline fallback during session
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // data.json: stale-while-revalidate
-  if (url.pathname.endsWith('/data.json') || url.pathname === '/data.json') {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(async (cache) => {
-        const cached = await cache.match('/data.json');
-        const fetchPromise = fetch(event.request).then((response) => {
-          if (response.ok) {
-            cache.put('/data.json', response.clone());
-          }
-          return response;
-        }).catch(() => cached);
-
-        return cached || fetchPromise;
-      })
-    );
-    return;
-  }
-
-  // Everything else: cache-first, fallback to network
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        if (response.ok && event.request.method === 'GET') {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        }
-        return response;
-      });
-    })
+    fetch(event.request).then((response) => {
+      if (response.ok && event.request.method === 'GET') {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+      }
+      return response;
+    }).catch(() => caches.match(event.request))
   );
+});
+
+// Listen for clear-cache message from the page
+self.addEventListener('message', (event) => {
+  if (event.data === 'CLEAR_CACHE') {
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => caches.delete(k)))
+    );
+  }
+  if (event.data === 'FORCE_UPDATE') {
+    self.registration.update();
+  }
 });

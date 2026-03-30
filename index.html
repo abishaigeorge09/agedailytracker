@@ -265,7 +265,29 @@
   <script>
     // --- Service Worker Registration ---
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register('/sw.js').then((reg) => {
+        // Check for updates every time the page is opened
+        reg.update();
+        // Auto-activate new service worker immediately
+        reg.addEventListener('updatefound', () => {
+          const newSW = reg.installing;
+          newSW.addEventListener('statechange', () => {
+            if (newSW.state === 'activated') location.reload();
+          });
+        });
+      }).catch(() => {});
+
+      // Clear cache when user leaves / closes the app
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden' && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage('CLEAR_CACHE');
+        }
+      });
+      window.addEventListener('pagehide', () => {
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage('CLEAR_CACHE');
+        }
+      });
     }
 
     // --- Helpers ---
