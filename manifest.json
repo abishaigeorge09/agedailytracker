@@ -1,0 +1,30 @@
+{
+  "name": "Command Center",
+  "short_name": "CmdCenter",
+  "description": "Personal accountability dashboard — 36-day sprint tracker",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%2309090b'/><text x='96' y='120' text-anchor='middle' font-family='system-ui' font-size='100' font-weight='800' fill='%233b82f6'>C</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%2309090b'/><text x='256' y='320' text-anchor='middle' font-family='system-ui' font-size='280' font-weight='800' fill='%233b82f6'>C</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%2309090b'/><text x='256' y='320' text-anchor='middle' font-family='system-ui' font-size='280' font-weight='800' fill='%233b82f6'>C</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

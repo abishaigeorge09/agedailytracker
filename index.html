@@ -1,75 +1,538 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Command Center — Abishai's Daily Tracker</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0a0e1a;--card:#111827;--card-border:#1e293b;--accent:#3b82f6;--accent-glow:rgba(59,130,246,.15);--career:#22c55e;--career-bg:rgba(34,197,94,.1);--faith:#a78bfa;--faith-bg:rgba(167,139,250,.1);--fitness:#f59e0b;--fitness-bg:rgba(245,158,11,.1);--personal:#64748b;--personal-bg:rgba(100,116,139,.1);--text:#e2e8f0;--text-muted:#94a3b8;--text-dim:#64748b;--done:#22c55e;--ip:#f59e0b;--ns:#ef4444;--white:#fff}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
-.header{background:linear-gradient(135deg,#1e3a5f 0%,#0f172a 100%);border-bottom:1px solid var(--card-border);padding:1.5rem 2rem;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.header-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.header h1{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px}
-.header-meta{display:flex;gap:1.5rem;align-items:center;font-size:.85rem;color:var(--text-muted)}
-.sprint-badge{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;padding:.3rem .8rem;border-radius:20px;font-weight:600;font-size:.8rem}
-.countdown{font-weight:600;color:var(--accent)}.container{max-width:1400px;margin:0 auto;padding:1.5rem}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
-.card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;overflow:hidden;transition:border-color .2s}
-.card:hover{border-color:#334155}.card-header{padding:.875rem 1.25rem;border-bottom:1px solid var(--card-border);display:flex;justify-content:space-between;align-items:center}
-.card-header h2{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}.card-body{padding:1.25rem}
-.goal-card{border-radius:10px;padding:1rem 1.25rem;margin-bottom:.75rem;border-left:3px solid}.goal-card:last-child{margin-bottom:0}
-.goal-card.career{border-color:var(--career);background:var(--career-bg)}.goal-card.faith{border-color:var(--faith);background:var(--faith-bg)}
-.goal-card.fitness{border-color:var(--fitness);background:var(--fitness-bg)}
-.goal-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.4rem}
-.goal-card.career .goal-label{color:var(--career)}.goal-card.faith .goal-label{color:var(--faith)}.goal-card.fitness .goal-label{color:var(--fitness)}
-.goal-text{font-size:.9rem;color:var(--text);line-height:1.5}
-.goal-tier{font-size:.7rem;color:var(--text-dim);margin-top:.5rem;display:flex;flex-direction:column;gap:.25rem}.tier-label{font-weight:600;color:var(--text-muted)}
-.schedule-item{display:grid;grid-template-columns:110px 1fr auto;gap:1rem;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.04);align-items:center}
-.schedule-item:last-child{border-bottom:none}.sched-time{font-size:.8rem;font-weight:600;color:var(--text-muted);font-variant-numeric:tabular-nums}
-.sched-activity{font-size:.88rem}.sched-cat{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:.2rem .6rem;border-radius:20px;white-space:nowrap}
-.cat-career{color:var(--career);background:var(--career-bg)}.cat-faith{color:var(--faith);background:var(--faith-bg)}
-.cat-fitness{color:var(--fitness);background:var(--fitness-bg)}.cat-personal{color:var(--personal);background:var(--personal-bg)}
-.task-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.task-item:last-child{border-bottom:none}.task-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--text-dim);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.7rem}
-.task-check.done{background:var(--done);border-color:var(--done);color:#000}.task-check.ip{background:var(--ip);border-color:var(--ip);color:#000}
-.task-content{flex:1}.task-name{font-size:.88rem}.task-meta{font-size:.72rem;color:var(--text-dim);margin-top:.15rem}
-.status{font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:10px}
-.status-ns{color:var(--ns);background:rgba(239,68,68,.1)}.status-ip{color:var(--ip);background:rgba(245,158,11,.1)}.status-done{color:var(--done);background:rgba(34,197,94,.1)}
-.milestone{padding:.875rem 0;border-bottom:1px solid rgba(255,255,255,.04)}.milestone:last-child{border-bottom:none}
-.milestone-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem}
-.milestone-week{font-weight:700;font-size:.88rem}.milestone-dates{font-size:.75rem;color:var(--text-dim)}.milestone-kpis{font-size:.8rem;color:var(--text-muted);margin-top:.3rem}
-.affirmation-box{background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(59,130,246,.08));border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:1.25rem;font-style:italic;color:var(--text);font-size:.95rem;line-height:1.6;text-align:center}
-.affirmation-ref{font-size:.75rem;color:var(--faith);margin-top:.5rem;font-style:normal}
-.gym-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem}
-.gym-day{background:rgba(255,255,255,.03);border-radius:8px;padding:.75rem;text-align:center;border:1px solid var(--card-border)}
-.gym-day.rest{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2)}.gym-day.today{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
-.gym-day-name{font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--text-dim);letter-spacing:1px}.gym-day-split{font-size:.85rem;font-weight:600;margin-top:.25rem}
-.gym-day.rest .gym-day-split{color:var(--ip)}
-.progress-container{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}.progress-item{text-align:center}
-.progress-ring{position:relative;width:80px;height:80px}.progress-ring svg{transform:rotate(-90deg)}.progress-ring circle{fill:none;stroke-width:6}
-.progress-ring .bg{stroke:rgba(255,255,255,.05)}.progress-ring .fg{stroke-linecap:round;transition:stroke-dashoffset .5s}
-.progress-value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.9rem;font-weight:700}.progress-label{font-size:.7rem;color:var(--text-dim);margin-top:.25rem}
-.log-entry{padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.04)}.log-entry:last-child{border-bottom:none}
-.log-date{font-weight:600;font-size:.85rem}.log-details{font-size:.82rem;color:var(--text-muted);margin-top:.25rem}
-.bible-progress{display:flex;gap:3px;flex-wrap:wrap;margin-top:.5rem}
-.bible-ch{width:22px;height:22px;border-radius:4px;font-size:.6rem;display:flex;align-items:center;justify-content:center;font-weight:600;background:rgba(255,255,255,.04);color:var(--text-dim)}
-.bible-ch.done{background:var(--faith);color:#000}.bible-ch.today{background:rgba(167,139,250,.3);color:var(--faith);border:1px solid var(--faith)}
-.section{margin-bottom:1.25rem}
-@media(max-width:1024px){.grid-2,.grid-3{grid-template-columns:1fr}.gym-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){.container{padding:1rem}.header{padding:1rem}.header h1{font-size:1.2rem}.schedule-item{grid-template-columns:90px 1fr}.sched-cat{display:none}.gym-grid{grid-template-columns:repeat(3,1fr)}}
-</style></head><body>
-<div class="header"><div class="header-inner"><h1>COMMAND CENTER</h1><div class="header-meta"><span class="sprint-badge">36-DAY SPRINT</span><span>Day <strong class="countdown" id="sprintDay">2</strong> of 36</span><span>YC Deadline: <strong class="countdown">May 4</strong></span><span id="currentDate">Monday, March 30, 2026</span></div></div></div>
-<div class="container">
-<div class="section"><div class="affirmation-box">"I ship fast, talk to users, and iterate. Perfection is the enemy — progress is the standard."<div class="affirmation-ref">Affirmation #4 — "Commit to the Lord whatever you do, and he will establish your plans." — Proverbs 16:3</div></div></div>
-<div class="section"><div class="card"><div class="card-header"><h2>Sprint Progress</h2><span class="status status-ip">Week 1 of 5</span></div><div class="card-body"><div class="progress-container"><div class="progress-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="34"/><circle class="fg" cx="40" cy="40" r="34" stroke="var(--career)" stroke-dasharray="213.6" stroke-dashoffset="207.2"/></svg><div class="progress-value" style="color:var(--career)">3%</div></div><div class="progress-label">Sprint</div></div><div class="progress-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="34"/><circle class="fg" cx="40" cy="40" r="34" stroke="var(--fitness)" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg><div class="progress-value" style="color:var(--fitness)">0/6</div></div><div class="progress-label">Gym This Week</div></div><div class="progress-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="34"/><circle class="fg" cx="40" cy="40" r="34" stroke="var(--faith)" stroke-dasharray="213.6" stroke-dashoffset="183"/></svg><div class="progress-value" style="color:var(--faith)">1/66</div></div><div class="progress-label">Isaiah</div></div><div class="progress-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="34"/><circle class="fg" cx="40" cy="40" r="34" stroke="var(--accent)" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg><div class="progress-value" style="color:var(--accent)">0/50</div></div><div class="progress-label">Videos Analyzed</div></div></div></div></div></div>
-<div class="section grid-3"><div class="goal-card career"><div class="goal-label">Career — Benji</div><div class="goal-text">Complete weekly tech scan. Begin ML pipeline setup (MediaPipe dev environment). Start coach outreach list.</div><div class="goal-tier"><span><span class="tier-label">Q:</span> Launch MVP, apply YC S26 + 3 accelerators</span><span><span class="tier-label">M:</span> Core ML pipeline, 50+ videos, landing page live</span><span><span class="tier-label">W:</span> Dev env setup, pipeline start, tech scan, outreach list</span></div></div><div class="goal-card faith"><div class="goal-label">Faith</div><div class="goal-text">Read Isaiah 2. Quiz on NotebookLM. Pray. Journal reflection.</div><div class="goal-tier"><span><span class="tier-label">Q:</span> Complete Isaiah, consistent 1-hour devotional</span><span><span class="tier-label">M:</span> Isaiah daily, no zero days, 3+ reflections/week</span><span><span class="tier-label">W:</span> Isaiah 2–8, journal 3+ reflections</span></div></div><div class="goal-card fitness"><div class="goal-label">Fitness</div><div class="goal-text">Pull Day — Back + Biceps. Go hard, first real session of the sprint.</div><div class="goal-tier"><span><span class="tier-label">Q:</span> Gym 6x/week, balanced diet, sports 2x/week</span><span><span class="tier-label">M:</span> 24+ gym sessions, PPL locked, track meals</span><span><span class="tier-label">W:</span> 6 sessions Mon–Wed, Fri–Sun</span></div></div></div>
-<div class="section grid-2"><div class="card"><div class="card-header"><h2>Today's Schedule — Monday, Mar 30</h2></div><div class="card-body"><div class="schedule-item"><span class="sched-time">4:00–4:10</span><span class="sched-activity">Wake up, get ready</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">4:10–5:10</span><span class="sched-activity">Bible: Isaiah 2 + NotebookLM + prayer</span><span class="sched-cat cat-faith">Faith</span></div><div class="schedule-item"><span class="sched-time">5:10–5:45</span><span class="sched-activity">Morning planning session</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">5:45–6:00</span><span class="sched-activity">Pre-gym prep</span><span class="sched-cat cat-fitness">Fitness</span></div><div class="schedule-item"><span class="sched-time">6:00–8:00</span><span class="sched-activity">Gym — Pull Day (Back + Biceps)</span><span class="sched-cat cat-fitness">Fitness</span></div><div class="schedule-item"><span class="sched-time">8:00–8:30</span><span class="sched-activity">Shower + breakfast</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">8:30–9:00</span><span class="sched-activity">Daily Family Connect</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">9:00–9:30</span><span class="sched-activity">Benji Weekly Tech Scan</span><span class="sched-cat cat-career">Career</span></div><div class="schedule-item"><span class="sched-time">9:30–12:00</span><span class="sched-activity">Deep work — ML pipeline setup</span><span class="sched-cat cat-career">Career</span></div><div class="schedule-item"><span class="sched-time">12:00–12:45</span><span class="sched-activity">Lunch</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">12:45–3:45</span><span class="sched-activity">Deep work — ML pipeline + coach outreach list</span><span class="sched-cat cat-career">Career</span></div><div class="schedule-item"><span class="sched-time">3:45–4:00</span><span class="sched-activity">Buffer</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">4:00–7:00</span><span class="sched-activity">Future of Tech event (Decal 6–7 PM)</span><span class="sched-cat cat-career">Career</span></div><div class="schedule-item"><span class="sched-time">7:00–7:30</span><span class="sched-activity">Dinner</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">7:30–9:15</span><span class="sched-activity">Landing page research / competitor analysis</span><span class="sched-cat cat-career">Career</span></div><div class="schedule-item"><span class="sched-time">9:30</span><span class="sched-activity">Evening planning session</span><span class="sched-cat cat-personal">Personal</span></div><div class="schedule-item"><span class="sched-time">10:00</span><span class="sched-activity">Lights out</span><span class="sched-cat cat-personal">Personal</span></div></div></div>
-<div class="card"><div class="card-header"><h2>Monday Tasks</h2><span class="status status-ns">0/6 Done</span></div><div class="card-body"><div class="task-item"><div class="task-check"></div><div class="task-content"><div class="task-name">Benji Weekly Tech Scan</div><div class="task-meta">Career — High Priority</div></div></div><div class="task-item"><div class="task-check"></div><div class="task-content"><div class="task-name">ML pipeline setup — MediaPipe dev environment</div><div class="task-meta">Career — High Priority</div></div></div><div class="task-item"><div class="task-check"></div><div class="task-content"><div class="task-name">Start coach outreach list (10+ names)</div><div class="task-meta">Career — Medium Priority</div></div></div><div class="task-item"><div class="task-check"></div><div class="task-content"><div class="task-name">Attend Future of Tech event</div><div class="task-meta">Career — Medium Priority</div></div></div><div class="task-item"><div class="task-check"></div><div class="task-content"><div class="task-name">Read Isaiah 2 + NotebookLM quiz + pray</div><div class="task-meta">Faith — High Priority</div></div></div><div class="task-item"><div class="task-check"></div><div class="task-content"><div class="task-name">Gym — Pull Day (Back + Biceps)</div><div class="task-meta">Fitness — High Priority</div></div></div></div></div></div>
-<div class="section grid-2"><div class="card"><div class="card-header"><h2>Sprint Milestones</h2></div><div class="card-body"><div class="milestone"><div class="milestone-header"><span class="milestone-week">Week 1 — Foundation & Pipeline</span><span class="status status-ip">Current</span></div><div class="milestone-dates">Mar 30 – Apr 5</div><div class="milestone-kpis">KPIs: 10 videos analyzed, 5 coach names, dev env running</div></div><div class="milestone"><div class="milestone-header"><span class="milestone-week">Week 2 — MVP Core Build</span><span class="status status-ns">Upcoming</span></div><div class="milestone-dates">Apr 6 – Apr 12</div><div class="milestone-kpis">KPIs: 50 videos, 10 emails sent, pipeline demo</div></div><div class="milestone"><div class="milestone-header"><span class="milestone-week">Week 3 — Validation & Traction</span><span class="status status-ns">Upcoming</span></div><div class="milestone-dates">Apr 13 – Apr 19</div><div class="milestone-kpis">KPIs: 200 clips, 5 calls, live landing page</div></div><div class="milestone"><div class="milestone-header"><span class="milestone-week">Week 4 — Demo & Application</span><span class="status status-ns">Upcoming</span></div><div class="milestone-dates">Apr 20 – Apr 26</div><div class="milestone-kpis">KPIs: Demo video, draft app, 2+ testimonials</div></div><div class="milestone"><div class="milestone-header"><span class="milestone-week">Week 5 — Polish & Submit</span><span class="status status-ns">Upcoming</span></div><div class="milestone-dates">Apr 27 – May 3</div><div class="milestone-kpis">KPIs: YC submitted, 3+ accelerator apps sent</div></div></div></div>
-<div><div class="card" style="margin-bottom:1.25rem"><div class="card-header"><h2>Isaiah Reading Progress</h2></div><div class="card-body"><div style="font-size:.85rem;color:var(--text-muted);margin-bottom:.75rem">66 chapters — 1 per day</div><div class="bible-progress"><div class="bible-ch done">1</div><div class="bible-ch today">2</div><div class="bible-ch">3</div><div class="bible-ch">4</div><div class="bible-ch">5</div><div class="bible-ch">6</div><div class="bible-ch">7</div><div class="bible-ch">8</div><div class="bible-ch">9</div><div class="bible-ch">10</div><div class="bible-ch">11</div><div class="bible-ch">12</div><div class="bible-ch">13</div><div class="bible-ch">14</div><div class="bible-ch">15</div><div class="bible-ch">16</div><div class="bible-ch">17</div><div class="bible-ch">18</div><div class="bible-ch">19</div><div class="bible-ch">20</div><div class="bible-ch">21</div><div class="bible-ch">22</div><div class="bible-ch">23</div><div class="bible-ch">24</div><div class="bible-ch">25</div><div class="bible-ch">26</div><div class="bible-ch">27</div><div class="bible-ch">28</div><div class="bible-ch">29</div><div class="bible-ch">30</div><div class="bible-ch">31</div><div class="bible-ch">32</div><div class="bible-ch">33</div><div class="bible-ch">34</div><div class="bible-ch">35</div><div class="bible-ch">36</div><div class="bible-ch">37</div><div class="bible-ch">38</div><div class="bible-ch">39</div><div class="bible-ch">40</div><div class="bible-ch">41</div><div class="bible-ch">42</div><div class="bible-ch">43</div><div class="bible-ch">44</div><div class="bible-ch">45</div><div class="bible-ch">46</div><div class="bible-ch">47</div><div class="bible-ch">48</div><div class="bible-ch">49</div><div class="bible-ch">50</div><div class="bible-ch">51</div><div class="bible-ch">52</div><div class="bible-ch">53</div><div class="bible-ch">54</div><div class="bible-ch">55</div><div class="bible-ch">56</div><div class="bible-ch">57</div><div class="bible-ch">58</div><div class="bible-ch">59</div><div class="bible-ch">60</div><div class="bible-ch">61</div><div class="bible-ch">62</div><div class="bible-ch">63</div><div class="bible-ch">64</div><div class="bible-ch">65</div><div class="bible-ch">66</div></div></div></div>
-<div class="card"><div class="card-header"><h2>This Week's Gym Split</h2></div><div class="card-body"><div class="gym-grid"><div class="gym-day today"><div class="gym-day-name">Mon</div><div class="gym-day-split">Pull</div></div><div class="gym-day"><div class="gym-day-name">Tue</div><div class="gym-day-split">Push</div></div><div class="gym-day"><div class="gym-day-name">Wed</div><div class="gym-day-split">Legs</div></div><div class="gym-day rest"><div class="gym-day-name">Thu</div><div class="gym-day-split">REST</div></div><div class="gym-day"><div class="gym-day-name">Fri</div><div class="gym-day-split">Pull</div></div><div class="gym-day"><div class="gym-day-name">Sat</div><div class="gym-day-split">Push</div></div><div class="gym-day"><div class="gym-day-name">Sun</div><div class="gym-day-split">Legs</div></div></div></div></div></div></div>
-<div class="section"><div class="card"><div class="card-header"><h2>Daily Log</h2></div><div class="card-body"><div class="log-entry"><div class="log-date">Sunday, Mar 29 — Day 1</div><div class="log-details">Setup day. Command Center system initialized. Goals cascaded. Tracker created. Evening session complete.<br>Bible: Isaiah 1 (completed previously) | Affirmation #1 | Sprint begins tomorrow.</div></div></div></div></div>
-<div style="text-align:center;padding:1.5rem;color:var(--text-dim);font-size:.75rem">Command Center v1.0 — 36-Day YC Sprint — Last updated: Mar 29, 2026 9:30 PM PT</div>
-</div></body></html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Command Center</title>
+  <meta name="description" content="Personal accountability dashboard">
+  <meta name="theme-color" content="#09090b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CmdCenter">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='36' fill='%2309090b'/><text x='90' y='115' text-anchor='middle' font-family='system-ui' font-size='96' font-weight='800' fill='%233b82f6'>C</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #09090b;
+      --surface: #18181b;
+      --border: #27272a;
+      --border-hover: #3f3f46;
+      --accent: #3b82f6;
+      --career: #22c55e;
+      --faith: #a78bfa;
+      --fitness: #f59e0b;
+      --personal: #64748b;
+      --text: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-dim: #52525b;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-pill: 20px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 1rem 2rem; }
+    @media (min-width: 1024px) { .container { padding: 0 1.5rem 3rem; } }
+
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 0.75rem;
+    }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem;
+      transition: border-color 200ms ease;
+    }
+    .card:hover { border-color: var(--border-hover); }
+    @media (min-width: 1024px) { .card { padding: 1.25rem; } }
+
+    .section { margin-bottom: 1.25rem; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,9,11,0.85); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+    }
+    @media (min-width: 1024px) { .header { padding: 0.75rem 1.5rem; } }
+    .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .header-title {
+      font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @media (min-width: 768px) { .header-title { font-size: 1.5rem; } }
+    .header-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .pill {
+      display: inline-flex; align-items: center; padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .pill-sprint { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
+    .pill-day { background: rgba(250,250,250,0.06); color: var(--text-secondary); font-weight: 500; }
+    .pill-deadline { background: rgba(239,68,68,0.1); color: var(--error); border: 1px solid rgba(239,68,68,0.25); }
+
+    /* Affirmation */
+    .affirmation-card {
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(167,139,250,0.08));
+      border: 1px solid rgba(167,139,250,0.15);
+      border-radius: var(--radius); padding: 1.25rem;
+    }
+    .affirmation-text { font-style: italic; font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+    .affirmation-ref { font-size: 0.75rem; color: var(--faith); margin-top: 0.5rem; font-weight: 600; }
+
+    /* Progress rings */
+    .progress-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    @media (min-width: 768px) { .progress-grid { grid-template-columns: repeat(4, 1fr); } }
+    .ring-card { display: flex; flex-direction: column; align-items: center; padding: 1rem; }
+    .ring-svg { width: 80px; height: 80px; transform: rotate(-90deg); }
+    .ring-bg { fill: none; stroke: var(--border); stroke-width: 6; }
+    .ring-fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 800ms ease; }
+    .ring-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 0.5rem; text-align: center; }
+    .ring-value {
+      font-size: 0.8rem; font-weight: 700; fill: var(--text);
+      transform: rotate(90deg); transform-origin: center;
+    }
+
+    /* Goal cards */
+    .goals-grid { display: grid; gap: 0.75rem; }
+    @media (min-width: 768px) { .goals-grid { grid-template-columns: repeat(3, 1fr); } }
+    .goal-card { border-left: 3px solid; }
+    .goal-card[data-cat="career"] { border-left-color: var(--career); }
+    .goal-card[data-cat="faith"] { border-left-color: var(--faith); }
+    .goal-card[data-cat="fitness"] { border-left-color: var(--fitness); }
+    .goal-cat { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.35rem; }
+    .goal-cat[data-cat="career"] { color: var(--career); }
+    .goal-cat[data-cat="faith"] { color: var(--faith); }
+    .goal-cat[data-cat="fitness"] { color: var(--fitness); }
+    .goal-daily { font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .goal-cascade { overflow: hidden; transition: max-height 300ms ease; }
+    .goal-cascade.collapsed { max-height: 0; }
+    .goal-cascade-item { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.35rem; }
+    .goal-cascade-item strong { color: var(--text-dim); font-weight: 600; font-size: 0.65rem; text-transform: uppercase; }
+    .goal-toggle {
+      font-size: 0.65rem; color: var(--text-dim); cursor: pointer; margin-top: 0.5rem;
+      background: none; border: none; padding: 0; font-family: inherit;
+    }
+    .goal-toggle:hover { color: var(--text-secondary); }
+
+    /* Schedule */
+    .schedule-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.75rem; border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 200ms ease; user-select: none;
+      -webkit-user-select: none; min-height: 44px;
+    }
+    .schedule-item:active { transform: scale(0.98); }
+    .schedule-item:hover { background: rgba(255,255,255,0.03); }
+    .schedule-item.done { opacity: 0.45; }
+    .schedule-time { font-size: 0.7rem; color: var(--text-dim); font-weight: 600; min-width: 70px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .schedule-activity { flex: 1; font-size: 0.8rem; font-weight: 400; }
+    .schedule-item.done .schedule-activity { text-decoration: line-through; }
+    .schedule-check { font-size: 0.75rem; opacity: 0; transition: opacity 200ms; }
+    .schedule-item.done .schedule-check { opacity: 1; color: var(--success); }
+    .cat-pill {
+      font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 0.15rem 0.45rem; border-radius: var(--radius-pill); white-space: nowrap;
+    }
+    .cat-pill[data-cat="career"] { background: rgba(34,197,94,0.12); color: var(--career); }
+    .cat-pill[data-cat="faith"] { background: rgba(167,139,250,0.12); color: var(--faith); }
+    .cat-pill[data-cat="fitness"] { background: rgba(245,158,11,0.12); color: var(--fitness); }
+    .cat-pill[data-cat="personal"] { background: rgba(100,116,139,0.12); color: var(--personal); }
+
+    /* Tasks */
+    .task-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .task-counter { font-size: 0.8rem; font-weight: 700; }
+    .task-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.65rem 0.75rem; border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 200ms ease; user-select: none;
+      -webkit-user-select: none; min-height: 48px;
+    }
+    .task-item:active { transform: scale(0.98); }
+    .task-item:hover { background: rgba(255,255,255,0.03); }
+    .task-checkbox {
+      width: 22px; height: 22px; min-width: 22px; border-radius: 5px;
+      border: 2px solid var(--border-hover); display: flex; align-items: center;
+      justify-content: center; transition: all 200ms ease; font-size: 0.7rem;
+    }
+    .task-item.done .task-checkbox {
+      background: var(--success); border-color: var(--success); color: #fff;
+    }
+    .task-name { flex: 1; font-size: 0.85rem; font-weight: 400; transition: all 200ms ease; }
+    .task-item.done .task-name { text-decoration: line-through; opacity: 0.45; }
+    .task-meta { display: flex; gap: 0.35rem; align-items: center; }
+    .priority-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .priority-dot.high { background: var(--error); }
+    .priority-dot.medium { background: var(--warning); }
+    .priority-dot.low { background: var(--text-dim); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* Milestones */
+    .milestone-item {
+      display: flex; gap: 0.75rem; padding: 0.75rem; border-radius: var(--radius-sm);
+      border-left: 3px solid var(--border);
+    }
+    .milestone-item.current { border-left-color: var(--warning); background: rgba(245,158,11,0.04); }
+    .milestone-item + .milestone-item { margin-top: 0.5rem; }
+    .milestone-week { font-size: 0.7rem; font-weight: 700; color: var(--text-dim); min-width: 28px; }
+    .milestone-body { flex: 1; }
+    .milestone-theme { font-size: 0.85rem; font-weight: 600; }
+    .milestone-dates { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.1rem; }
+    .milestone-kpis { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; }
+    .status-badge {
+      font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 0.15rem 0.45rem; border-radius: var(--radius-pill);
+    }
+    .status-badge.current { background: rgba(245,158,11,0.15); color: var(--warning); }
+    .status-badge.upcoming { background: rgba(239,68,68,0.1); color: var(--text-dim); }
+    .status-badge.done { background: rgba(34,197,94,0.12); color: var(--success); }
+
+    /* Isaiah grid */
+    .isaiah-grid { display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; }
+    @media (max-width: 480px) { .isaiah-grid { grid-template-columns: repeat(8, 1fr); } }
+    .isaiah-ch {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 600; border-radius: 4px;
+      background: rgba(255,255,255,0.03); color: var(--text-dim);
+    }
+    .isaiah-ch.completed { background: rgba(167,139,250,0.25); color: var(--faith); }
+    .isaiah-ch.today { border: 1.5px solid var(--faith); color: var(--faith); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    /* Gym split */
+    .gym-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
+    .gym-day {
+      text-align: center; padding: 0.6rem 0.25rem; border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+    .gym-day.today { border-color: var(--accent); box-shadow: 0 0 12px rgba(59,130,246,0.2); }
+    .gym-day.rest { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.2); }
+    .gym-day-label { font-size: 0.6rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; }
+    .gym-day-split { font-size: 0.75rem; font-weight: 700; margin-top: 0.2rem; }
+
+    /* Daily log */
+    .log-entry { padding: 0.75rem; border-radius: var(--radius-sm); background: rgba(255,255,255,0.02); }
+    .log-entry + .log-entry { margin-top: 0.5rem; }
+    .log-date { font-size: 0.7rem; font-weight: 700; color: var(--accent); }
+    .log-summary { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+    .log-meta { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 2rem 0 1rem; font-size: 0.65rem; color: var(--text-dim); }
+
+    /* Checkbox bounce */
+    @keyframes checkBounce { 0% { transform: scale(1); } 30% { transform: scale(0.92); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+    .bounce { animation: checkBounce 300ms ease; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <span class="header-title">COMMAND CENTER</span>
+      <div class="header-meta" id="headerMeta"></div>
+    </div>
+  </header>
+
+  <main class="container" id="app">
+    <p style="color:var(--text-dim);text-align:center;padding:3rem 0;">Loading dashboard...</p>
+  </main>
+
+  <script>
+    // --- Service Worker Registration ---
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+
+    // --- Helpers ---
+    const $ = (s, p = document) => p.querySelector(s);
+    const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+    const catColor = (c) => ({ career: '#22c55e', faith: '#a78bfa', fitness: '#f59e0b', personal: '#64748b' }[c] || '#64748b');
+
+    function lsKey(prefix, date, idx) { return `cmd_${prefix}_${date}_${idx}`; }
+    function lsGet(key) { try { return localStorage.getItem(key); } catch { return null; } }
+    function lsSet(key, val) { try { localStorage.setItem(key, val); } catch {} }
+
+    function daysBetween(a, b) {
+      const d1 = new Date(a + 'T00:00:00');
+      const d2 = new Date(b + 'T00:00:00');
+      return Math.floor((d2 - d1) / 86400000);
+    }
+
+    function progressRing(pct, color, label, display) {
+      const r = 34, c = 2 * Math.PI * r;
+      const offset = c - (Math.min(pct, 100) / 100) * c;
+      return `<div class="card ring-card">
+        <svg class="ring-svg" viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="${r}"/>
+          <circle class="ring-fg" cx="40" cy="40" r="${r}" stroke="${color}"
+            stroke-dasharray="${c}" stroke-dashoffset="${offset}"/>
+          <text class="ring-value" x="40" y="44" text-anchor="middle">${display}</text>
+        </svg>
+        <div class="ring-label">${label}</div>
+      </div>`;
+    }
+
+    // --- Render ---
+    async function init() {
+      let data;
+      try {
+        const res = await fetch(`data.json?t=${Date.now()}`);
+        data = await res.json();
+      } catch {
+        $('#app').innerHTML = '<p style="color:var(--error);text-align:center;padding:3rem;">Failed to load data.json</p>';
+        return;
+      }
+
+      const d = data;
+      const today = d.current_day.date;
+      const sprintDay = daysBetween(d.sprint_start_date, today) + 1;
+      const ycDays = daysBetween(today, d.yc_deadline);
+
+      // Header
+      $('#headerMeta').innerHTML = `
+        <span class="pill pill-sprint">36-DAY SPRINT</span>
+        <span class="pill pill-day">Day ${sprintDay} of 36</span>
+        <span class="pill pill-deadline">YC: May 4 (${ycDays}d)</span>
+        <span class="pill pill-day">${d.current_day.day_name}, ${today}</span>
+      `;
+
+      // Affirmation
+      const affIdx = (sprintDay - 1) % d.affirmations.length;
+      const affirmation = d.affirmations[affIdx];
+
+      // Progress
+      const p = d.progress;
+      const sprintPct = Math.round((sprintDay / 36) * 100);
+
+      let html = '';
+
+      // 1. Affirmation
+      html += `<section class="section">
+        <div class="affirmation-card">
+          <div class="affirmation-text">"${affirmation}"</div>
+          <div class="affirmation-ref">Day ${sprintDay} Affirmation</div>
+        </div>
+      </section>`;
+
+      // 2. Progress rings
+      html += `<section class="section">
+        <div class="section-label">Sprint Progress</div>
+        <div class="progress-grid">
+          ${progressRing(sprintPct, '#3b82f6', 'Sprint', `${sprintPct}%`)}
+          ${progressRing((p.gym_this_week / p.gym_week_target) * 100, '#f59e0b', 'Gym / Week', `${p.gym_this_week}/${p.gym_week_target}`)}
+          ${progressRing((p.isaiah_completed / p.isaiah_total) * 100, '#a78bfa', 'Isaiah', `${p.isaiah_completed}/${p.isaiah_total}`)}
+          ${progressRing((p.videos_analyzed / p.videos_target) * 100, '#22c55e', 'Videos', `${p.videos_analyzed}/${p.videos_target}`)}
+        </div>
+      </section>`;
+
+      // 3. Goal cards
+      html += `<section class="section">
+        <div class="section-label">Today's Goals</div>
+        <div class="goals-grid">`;
+      for (const [cat, goals] of Object.entries(d.goals)) {
+        const isMobile = window.innerWidth < 1024;
+        html += `<div class="card goal-card" data-cat="${cat}">
+          <div class="goal-cat" data-cat="${cat}">${cat}</div>
+          <div class="goal-daily">${goals.daily}</div>
+          <div class="goal-cascade ${isMobile ? 'collapsed' : ''}" id="cascade-${cat}">
+            <div class="goal-cascade-item"><strong>Quarterly</strong><br>${goals.quarterly}</div>
+            <div class="goal-cascade-item"><strong>Monthly</strong><br>${goals.monthly}</div>
+            <div class="goal-cascade-item"><strong>Weekly</strong><br>${goals.weekly}</div>
+          </div>
+          <button class="goal-toggle" onclick="toggleCascade('${cat}')">${isMobile ? 'Show goals cascade ▾' : 'Hide cascade ▴'}</button>
+        </div>`;
+      }
+      html += `</div></section>`;
+
+      // 4. Schedule
+      html += `<section class="section">
+        <div class="section-label">Today's Schedule</div>
+        <div class="card" style="padding:0.25rem 0;">`;
+      d.schedule.forEach((s, i) => {
+        const key = lsKey('sched', today, i);
+        const isDone = lsGet(key) === 'done';
+        html += `<div class="schedule-item ${isDone ? 'done' : ''}" data-sched-idx="${i}" onclick="toggleSchedule(this, ${i}, '${today}')">
+          <span class="schedule-time">${s.time}</span>
+          <span class="schedule-activity">${s.activity}</span>
+          <span class="cat-pill" data-cat="${s.category}">${s.category}</span>
+          <span class="schedule-check">✓</span>
+        </div>`;
+      });
+      html += `</div></section>`;
+
+      // 5. Tasks
+      const taskStates = d.tasks.map((t, i) => {
+        const key = lsKey('tasks', today, i);
+        const stored = lsGet(key);
+        return stored || t.status;
+      });
+      const doneCount = taskStates.filter(s => s === 'done').length;
+      const totalTasks = d.tasks.length;
+      const counterColor = doneCount === 0 ? '#ef4444' : doneCount === totalTasks ? '#22c55e' : '#f59e0b';
+
+      html += `<section class="section">
+        <div class="section-label">
+          <div class="task-header">
+            <span>Today's Tasks</span>
+            <span class="task-counter" id="taskCounter" style="color:${counterColor}">${doneCount}/${totalTasks} Done</span>
+          </div>
+        </div>
+        <div class="card" style="padding:0.25rem 0;" id="taskList">`;
+
+      // Sort: incomplete first
+      const indices = d.tasks.map((_, i) => i);
+      indices.sort((a, b) => {
+        const aD = taskStates[a] === 'done' ? 1 : 0;
+        const bD = taskStates[b] === 'done' ? 1 : 0;
+        return aD - bD;
+      });
+
+      indices.forEach(i => {
+        const t = d.tasks[i];
+        const isDone = taskStates[i] === 'done';
+        html += `<div class="task-item ${isDone ? 'done' : ''}" data-task-idx="${i}" onclick="toggleTask(this, ${i}, '${today}')">
+          <div class="task-checkbox">${isDone ? '✓' : ''}</div>
+          <span class="task-name">${t.name}</span>
+          <div class="task-meta">
+            <span class="cat-pill" data-cat="${t.category}">${t.category}</span>
+            <span class="priority-dot ${t.priority}"></span>
+          </div>
+        </div>`;
+      });
+      html += `</div></section>`;
+
+      // 6. Milestones
+      html += `<section class="section">
+        <div class="section-label">Sprint Milestones</div>
+        <div class="card" style="padding:0.5rem;">`;
+      d.milestones.forEach(m => {
+        html += `<div class="milestone-item ${m.status}">
+          <div class="milestone-week">W${m.week}</div>
+          <div class="milestone-body">
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+              <span class="milestone-theme">${m.theme}</span>
+              <span class="status-badge ${m.status}">${m.status}</span>
+            </div>
+            <div class="milestone-dates">${m.dates}</div>
+            <div class="milestone-kpis">${m.kpis}</div>
+          </div>
+        </div>`;
+      });
+      html += `</div></section>`;
+
+      // 7. Isaiah
+      const completed = new Set(d.isaiah_chapters.completed);
+      const todayCh = d.isaiah_chapters.today;
+      html += `<section class="section">
+        <div class="section-label">Isaiah Reading Progress</div>
+        <div class="card">
+          <div class="isaiah-grid">`;
+      for (let ch = 1; ch <= 66; ch++) {
+        const cls = completed.has(ch) ? 'completed' : ch === todayCh ? 'today' : '';
+        html += `<div class="isaiah-ch ${cls}">${ch}</div>`;
+      }
+      html += `</div></div></section>`;
+
+      // 8. Gym split
+      html += `<section class="section">
+        <div class="section-label">Gym Split</div>
+        <div class="card">
+          <div class="gym-grid">`;
+      d.gym_week.forEach(g => {
+        const cls = [g.is_today ? 'today' : '', g.is_rest ? 'rest' : ''].join(' ');
+        html += `<div class="gym-day ${cls}">
+          <div class="gym-day-label">${g.day}</div>
+          <div class="gym-day-split" style="color:${g.is_rest ? 'var(--warning)' : 'var(--text)'}">${g.split}</div>
+        </div>`;
+      });
+      html += `</div></div></section>`;
+
+      // 9. Daily Log
+      html += `<section class="section">
+        <div class="section-label">Daily Log</div>
+        <div class="card" style="padding:0.5rem;">`;
+      const logs = [...d.daily_log].reverse().slice(0, 7);
+      logs.forEach(l => {
+        html += `<div class="log-entry">
+          <div class="log-date">Day ${l.sprint_day} — ${l.day_name}, ${l.date}</div>
+          <div class="log-summary">${l.summary}</div>
+          <div class="log-meta">${l.bible} · ${l.tasks_completed.length} tasks done${l.notes ? ' · ' + l.notes : ''}</div>
+        </div>`;
+      });
+      html += `</div></section>`;
+
+      // Footer
+      const updatedDate = new Date(d.last_updated);
+      html += `<footer class="footer">Last updated: ${updatedDate.toLocaleString()}</footer>`;
+
+      $('#app').innerHTML = html;
+    }
+
+    // --- Interactive handlers ---
+    function toggleTask(el, idx, date) {
+      const key = lsKey('tasks', date, idx);
+      const isDone = el.classList.contains('done');
+      const newState = isDone ? 'not_started' : 'done';
+      lsSet(key, newState);
+
+      el.classList.toggle('done');
+      const cb = el.querySelector('.task-checkbox');
+      cb.textContent = isDone ? '' : '✓';
+      cb.classList.add('bounce');
+      setTimeout(() => cb.classList.remove('bounce'), 300);
+
+      // Update counter
+      const allItems = $$('.task-item');
+      const done = allItems.filter(i => i.classList.contains('done')).length;
+      const total = allItems.length;
+      const counter = $('#taskCounter');
+      if (counter) {
+        counter.textContent = `${done}/${total} Done`;
+        counter.style.color = done === 0 ? '#ef4444' : done === total ? '#22c55e' : '#f59e0b';
+      }
+    }
+
+    function toggleSchedule(el, idx, date) {
+      const key = lsKey('sched', date, idx);
+      const isDone = el.classList.contains('done');
+      lsSet(key, isDone ? 'not_started' : 'done');
+      el.classList.toggle('done');
+    }
+
+    function toggleCascade(cat) {
+      const el = document.getElementById(`cascade-${cat}`);
+      const btn = el.nextElementSibling;
+      el.classList.toggle('collapsed');
+      btn.textContent = el.classList.contains('collapsed') ? 'Show goals cascade ▾' : 'Hide cascade ▴';
+    }
+
+    // --- Boot ---
+    init();
+  </script>
+</body>
+</html>
