@@ -2,6 +2,10 @@
   "last_updated": "2026-03-29T21:30:00-07:00",
   "sprint_start_date": "2026-03-29",
   "yc_deadline": "2026-05-04",
+  "daily_scripture": {
+    "verse": "Commit to the Lord whatever you do, and he will establish your plans.",
+    "reference": "Proverbs 16:3"
+  },
   "current_day": {
     "date": "2026-03-30",
     "day_name": "Monday",

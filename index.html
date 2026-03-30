@@ -331,11 +331,16 @@
 
       let html = '';
 
-      // 1. Affirmation
+      // 1. Affirmation + Scripture
+      const scripture = d.daily_scripture;
       html += `<section class="section">
         <div class="affirmation-card">
           <div class="affirmation-text">"${affirmation}"</div>
           <div class="affirmation-ref">Day ${sprintDay} Affirmation</div>
+          ${scripture ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(167,139,250,0.15);">
+            <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">"${scripture.verse}"</div>
+            <div style="font-size:0.7rem;color:var(--faith);font-weight:600;margin-top:0.25rem;">${scripture.reference}</div>
+          </div>` : ''}
         </div>
       </section>`;
 
