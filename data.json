@@ -1,12 +1,12 @@
 {
-  "last_updated": "2026-03-30T00:44:00-07:00",
+  "last_updated": "2026-03-30T10:30:00-07:00",
   "sprint_start_date": "2026-03-29",
   "yc_deadline": "2026-05-04",
   "current_day": {
     "date": "2026-03-30",
     "day_name": "Monday",
     "sprint_day": 2,
-    "gym_split": "Pull",
+    "gym_split": "Push",
     "bible_chapter": "Isaiah 2"
   },
   "daily_scripture": {
@@ -18,19 +18,19 @@
       "quarterly": "Launch Benji MVP with initial customers. Apply to YC S26 (May 4 deadline) and 3+ other accelerators.",
       "monthly": "Complete core ML pipeline. Analyze 50+ videos. Label 200+ clips. Landing page live. 10+ coach outreach emails. 5 coach calls scheduled.",
       "weekly": "Set up ML dev environment. Begin pose detection pipeline. Weekly tech scan. Start coach outreach list.",
-      "daily": "Complete weekly tech scan. Begin ML pipeline setup (MediaPipe dev environment). Start coach outreach list."
+      "daily": "Build class presentation. Work on other project (1 hr). Call team member. Benji tech scan."
     },
     "faith": {
       "quarterly": "Complete Isaiah with deep understanding. Build consistent 1-hour daily devotional habit.",
-      "monthly": "Read Isaiah daily (1 chapter/day). Build devotional streak — no zero days. Journal 3+ reflections per week.",
-      "weekly": "Read Isaiah 2–8. Journal 3+ reflections. No zero days.",
+      "monthly": "Read Isaiah daily (1 chapter/day). Build devotional streak - no zero days. Journal 3+ reflections per week.",
+      "weekly": "Read Isaiah 2-8. Journal 3+ reflections. No zero days.",
       "daily": "Read Isaiah 2. Quiz on NotebookLM. Pray. Journal reflection."
     },
     "fitness": {
       "quarterly": "Gym 6x/week consistently (PPL x2). Balanced diet on a budget. Play sports 2x/week.",
       "monthly": "Hit gym 24+ times. Establish PPL routine. Track meals. Play tennis or basketball 2x/week.",
-      "weekly": "Gym 6 sessions Mon–Wed, Fri–Sun. PPL split locked. Track meals daily.",
-      "daily": "Pull Day — Back + Biceps. First real session of the sprint."
+      "weekly": "Gym 6 sessions Mon-Wed, Fri-Sun. PPL split locked. Track meals daily.",
+      "daily": "Push Day skipped - packed evening (Decal + dinner meeting). Make it up later this week."
     }
   },
   "progress": {
@@ -47,55 +47,57 @@
     "today": 2
   },
   "gym_week": [
-    {"day": "Mon", "split": "Pull", "is_today": true, "is_rest": false},
-    {"day": "Tue", "split": "Push", "is_today": false, "is_rest": false},
+    {"day": "Mon", "split": "Push", "is_today": true, "is_rest": false},
+    {"day": "Tue", "split": "Pull", "is_today": false, "is_rest": false},
     {"day": "Wed", "split": "Legs", "is_today": false, "is_rest": false},
     {"day": "Thu", "split": "REST", "is_today": false, "is_rest": true},
-    {"day": "Fri", "split": "Pull", "is_today": false, "is_rest": false},
-    {"day": "Sat", "split": "Push", "is_today": false, "is_rest": false},
+    {"day": "Fri", "split": "Push", "is_today": false, "is_rest": false},
+    {"day": "Sat", "split": "Pull", "is_today": false, "is_rest": false},
     {"day": "Sun", "split": "Legs", "is_today": false, "is_rest": false}
   ],
   "schedule": [
-    {"time": "7:00–7:15", "activity": "Wake up, get ready", "category": "personal"},
-    {"time": "7:15–8:00", "activity": "Bible: Isaiah 2 + NotebookLM + prayer", "category": "faith"},
-    {"time": "8:00–8:30", "activity": "Breakfast + planning", "category": "personal"},
-    {"time": "8:30–9:00", "activity": "Daily Family Connect", "category": "personal"},
-    {"time": "9:00–9:30", "activity": "Benji Weekly Tech Scan", "category": "career"},
-    {"time": "9:30–12:00", "activity": "Deep work — ML pipeline setup", "category": "career"},
-    {"time": "12:00–12:45", "activity": "Lunch", "category": "personal"},
-    {"time": "12:45–3:45", "activity": "Deep work — ML pipeline + coach outreach list", "category": "career"},
-    {"time": "3:45–4:00", "activity": "Buffer", "category": "personal"},
-    {"time": "4:00–7:00", "activity": "Future of Tech event (Decal 6–7 PM)", "category": "career"},
-    {"time": "7:00–7:30", "activity": "Dinner", "category": "personal"},
-    {"time": "7:30–8:30", "activity": "Gym — Pull Day (Back + Biceps)", "category": "fitness"},
-    {"time": "8:45–9:15", "activity": "Shower + wind down", "category": "personal"},
-    {"time": "9:30", "activity": "Evening planning session", "category": "personal"},
+    {"time": "10:30-11:00", "activity": "Shower + Breakfast", "category": "personal"},
+    {"time": "11:00-12:00", "activity": "Bible - Isaiah 2 + NotebookLM quiz + Prayer", "category": "faith"},
+    {"time": "12:00-1:30", "activity": "Build class presentation slides", "category": "career"},
+    {"time": "1:30-2:00", "activity": "Lunch", "category": "personal"},
+    {"time": "2:00-3:00", "activity": "Other project - 1 hr deep work", "category": "career"},
+    {"time": "3:00-3:30", "activity": "Team member call", "category": "career"},
+    {"time": "3:30-5:00", "activity": "Benji deep work - ML pipeline / tech scan", "category": "career"},
+    {"time": "5:00-5:45", "activity": "Presentation rehearsal - run 10-min talk 2-3x", "category": "career"},
+    {"time": "5:45-6:00", "activity": "Buffer / travel to class", "category": "personal"},
+    {"time": "6:00-7:00", "activity": "Decal - PRESENT (10-min presentation)", "category": "career"},
+    {"time": "7:00-9:00", "activity": "Dinner meeting", "category": "career"},
+    {"time": "9:00-9:30", "activity": "Evening planning session", "category": "personal"},
+    {"time": "9:30-10:00", "activity": "Wind down + Bible meditation", "category": "faith"},
     {"time": "10:00", "activity": "Lights out", "category": "personal"}
   ],
   "tasks": [
-    {"name": "Benji Weekly Tech Scan", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "ML pipeline setup — MediaPipe dev environment", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "Start coach outreach list (10+ names)", "category": "career", "priority": "medium", "status": "not_started"},
-    {"name": "Attend Future of Tech event", "category": "career", "priority": "medium", "status": "not_started", "note": "Network!"},
     {"name": "Read Isaiah 2 + NotebookLM quiz + pray", "category": "faith", "priority": "high", "status": "not_started"},
-    {"name": "Gym — Pull Day (Back + Biceps)", "category": "fitness", "priority": "high", "status": "not_started"}
+    {"name": "Build class presentation slides", "category": "career", "priority": "high", "status": "not_started"},
+    {"name": "Rehearse 10-min presentation (2-3 run-throughs)", "category": "career", "priority": "high", "status": "not_started"},
+    {"name": "Present in Decal (6 PM)", "category": "career", "priority": "high", "status": "not_started"},
+    {"name": "Other project - 1 hr deep work", "category": "career", "priority": "high", "status": "not_started"},
+    {"name": "Call team member", "category": "career", "priority": "medium", "status": "not_started"},
+    {"name": "Benji tech scan + ML pipeline setup", "category": "career", "priority": "medium", "status": "not_started"},
+    {"name": "Dinner meeting (7-9 PM)", "category": "career", "priority": "high", "status": "not_started"},
+    {"name": "Gym - Push Day (skipped - make up this week)", "category": "fitness", "priority": "low", "status": "not_started"}
   ],
   "milestones": [
-    {"week": 1, "theme": "Foundation & Pipeline", "dates": "Mar 30 – Apr 5", "kpis": "10 videos analyzed, 5 coach names, dev env running", "status": "current"},
-    {"week": 2, "theme": "MVP Core Build", "dates": "Apr 6 – Apr 12", "kpis": "50 videos, 10 emails sent, pipeline demo", "status": "upcoming"},
-    {"week": 3, "theme": "Validation & Traction", "dates": "Apr 13 – Apr 19", "kpis": "200 clips, 5 calls, live landing page", "status": "upcoming"},
-    {"week": 4, "theme": "Demo & Application", "dates": "Apr 20 – Apr 26", "kpis": "Demo video, draft app, 2+ testimonials", "status": "upcoming"},
-    {"week": 5, "theme": "Polish & Submit", "dates": "Apr 27 – May 3", "kpis": "YC submitted, 3+ accelerator apps sent", "status": "upcoming"}
+    {"week": 1, "theme": "Foundation & Pipeline", "dates": "Mar 30 - Apr 5", "kpis": "10 videos analyzed, 5 coach names, dev env running", "status": "current"},
+    {"week": 2, "theme": "MVP Core Build", "dates": "Apr 6 - Apr 12", "kpis": "50 videos, 10 emails sent, pipeline demo", "status": "upcoming"},
+    {"week": 3, "theme": "Validation & Traction", "dates": "Apr 13 - Apr 19", "kpis": "200 clips, 5 calls, live landing page", "status": "upcoming"},
+    {"week": 4, "theme": "Demo & Application", "dates": "Apr 20 - Apr 26", "kpis": "Demo video, draft app, 2+ testimonials", "status": "upcoming"},
+    {"week": 5, "theme": "Polish & Submit", "dates": "Apr 27 - May 3", "kpis": "YC submitted, 3+ accelerator apps sent", "status": "upcoming"}
   ],
   "affirmations": [
     "I am building something that will change how coaches develop athletes. God has placed this vision in me for a reason.",
-    "I am disciplined, focused, and relentless. I do not waste time — every hour moves me closer to my goal.",
+    "I am disciplined, focused, and relentless. I do not waste time - every hour moves me closer to my goal.",
     "I am not behind. I am exactly where God needs me to be, and I will steward this season with excellence.",
-    "I ship fast, talk to users, and iterate. Perfection is the enemy — progress is the standard.",
+    "I ship fast, talk to users, and iterate. Perfection is the enemy - progress is the standard.",
     "My body is my instrument. I train it, fuel it, and rest it so I can perform at my best.",
     "I am a founder. I solve problems, build products, and create value. This is who I am becoming.",
     "I trust God's timing. I work as if it depends on me and pray as if it depends on Him.",
-    "Today I will do one thing that scares me — one conversation, one cold email, one bold ask.",
+    "Today I will do one thing that scares me - one conversation, one cold email, one bold ask.",
     "I am grateful for Berkeley, for this opportunity, for my family, and for the strength to pursue this dream.",
     "36 days. No time to be perfect. Time to be real. Let's go."
   ],
@@ -109,7 +111,7 @@
       "affirmation_index": 0,
       "tasks_completed": ["Command Center setup", "Dashboard deployed", "GitHub repo created"],
       "tasks_incomplete": [],
-      "notes": "Day 1 of 36-day sprint. Late night — adjusted Monday wake-up to 7 AM."
+      "notes": "Day 1 of 36-day sprint. Late night - slept until 10:30 AM on Day 2."
     }
   ]
 }
