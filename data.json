@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-03-29T21:30:00-07:00",
+  "last_updated": "2026-03-30T00:44:00-07:00",
   "sprint_start_date": "2026-03-29",
   "yc_deadline": "2026-05-04",
-  "daily_scripture": {
-    "verse": "Commit to the Lord whatever you do, and he will establish your plans.",
-    "reference": "Proverbs 16:3"
-  },
   "current_day": {
     "date": "2026-03-30",
     "day_name": "Monday",
     "sprint_day": 2,
     "gym_split": "Pull",
     "bible_chapter": "Isaiah 2"
+  },
+  "daily_scripture": {
+    "verse": "Commit to the Lord whatever you do, and he will establish your plans.",
+    "reference": "Proverbs 16:3"
   },
   "goals": {
     "career": {
@@ -22,15 +22,15 @@
     },
     "faith": {
       "quarterly": "Complete Isaiah with deep understanding. Build consistent 1-hour daily devotional habit.",
-      "monthly": "Read Isaiah daily (1 chapter/day). Build devotional streak \u2014 no zero days. Journal 3+ reflections per week.",
-      "weekly": "Read Isaiah 2\u20138. Journal 3+ reflections. No zero days.",
+      "monthly": "Read Isaiah daily (1 chapter/day). Build devotional streak — no zero days. Journal 3+ reflections per week.",
+      "weekly": "Read Isaiah 2–8. Journal 3+ reflections. No zero days.",
       "daily": "Read Isaiah 2. Quiz on NotebookLM. Pray. Journal reflection."
     },
     "fitness": {
       "quarterly": "Gym 6x/week consistently (PPL x2). Balanced diet on a budget. Play sports 2x/week.",
       "monthly": "Hit gym 24+ times. Establish PPL routine. Track meals. Play tennis or basketball 2x/week.",
-      "weekly": "Gym 6 sessions Mon\u2013Wed, Fri\u2013Sun. PPL split locked. Track meals daily.",
-      "daily": "Pull Day \u2014 Back + Biceps."
+      "weekly": "Gym 6 sessions Mon–Wed, Fri–Sun. PPL split locked. Track meals daily.",
+      "daily": "Pull Day — Back + Biceps. First real session of the sprint."
     }
   },
   "progress": {
@@ -56,48 +56,46 @@
     {"day": "Sun", "split": "Legs", "is_today": false, "is_rest": false}
   ],
   "schedule": [
-    {"time": "4:00\u20134:10", "activity": "Wake up, get ready", "category": "personal"},
-    {"time": "4:10\u20135:10", "activity": "Bible: Isaiah 2 + NotebookLM + prayer", "category": "faith"},
-    {"time": "5:10\u20135:45", "activity": "Morning planning session", "category": "personal"},
-    {"time": "5:45\u20136:00", "activity": "Pre-gym prep", "category": "fitness"},
-    {"time": "6:00\u20138:00", "activity": "Gym \u2014 Pull Day (Back + Biceps)", "category": "fitness"},
-    {"time": "8:00\u20138:30", "activity": "Shower + breakfast", "category": "personal"},
-    {"time": "8:30\u20139:00", "activity": "Daily Family Connect", "category": "personal"},
-    {"time": "9:00\u20139:30", "activity": "Benji Weekly Tech Scan", "category": "career"},
-    {"time": "9:30\u201312:00", "activity": "Deep work \u2014 ML pipeline setup", "category": "career"},
-    {"time": "12:00\u201312:45", "activity": "Lunch", "category": "personal"},
-    {"time": "12:45\u20133:45", "activity": "Deep work \u2014 ML pipeline + coach outreach list", "category": "career"},
-    {"time": "3:45\u20134:00", "activity": "Buffer", "category": "personal"},
-    {"time": "4:00\u20137:00", "activity": "Future of Tech event (Decal 6\u20137 PM)", "category": "career"},
-    {"time": "7:00\u20137:30", "activity": "Dinner", "category": "personal"},
-    {"time": "7:30\u20139:15", "activity": "Landing page research / competitor analysis", "category": "career"},
+    {"time": "7:00–7:15", "activity": "Wake up, get ready", "category": "personal"},
+    {"time": "7:15–8:00", "activity": "Bible: Isaiah 2 + NotebookLM + prayer", "category": "faith"},
+    {"time": "8:00–8:30", "activity": "Breakfast + planning", "category": "personal"},
+    {"time": "8:30–9:00", "activity": "Daily Family Connect", "category": "personal"},
+    {"time": "9:00–9:30", "activity": "Benji Weekly Tech Scan", "category": "career"},
+    {"time": "9:30–12:00", "activity": "Deep work — ML pipeline setup", "category": "career"},
+    {"time": "12:00–12:45", "activity": "Lunch", "category": "personal"},
+    {"time": "12:45–3:45", "activity": "Deep work — ML pipeline + coach outreach list", "category": "career"},
+    {"time": "3:45–4:00", "activity": "Buffer", "category": "personal"},
+    {"time": "4:00–7:00", "activity": "Future of Tech event (Decal 6–7 PM)", "category": "career"},
+    {"time": "7:00–7:30", "activity": "Dinner", "category": "personal"},
+    {"time": "7:30–8:30", "activity": "Gym — Pull Day (Back + Biceps)", "category": "fitness"},
+    {"time": "8:45–9:15", "activity": "Shower + wind down", "category": "personal"},
     {"time": "9:30", "activity": "Evening planning session", "category": "personal"},
     {"time": "10:00", "activity": "Lights out", "category": "personal"}
   ],
   "tasks": [
     {"name": "Benji Weekly Tech Scan", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "ML pipeline setup \u2014 MediaPipe dev environment", "category": "career", "priority": "high", "status": "not_started"},
+    {"name": "ML pipeline setup — MediaPipe dev environment", "category": "career", "priority": "high", "status": "not_started"},
     {"name": "Start coach outreach list (10+ names)", "category": "career", "priority": "medium", "status": "not_started"},
     {"name": "Attend Future of Tech event", "category": "career", "priority": "medium", "status": "not_started", "note": "Network!"},
     {"name": "Read Isaiah 2 + NotebookLM quiz + pray", "category": "faith", "priority": "high", "status": "not_started"},
-    {"name": "Gym \u2014 Pull Day (Back + Biceps)", "category": "fitness", "priority": "high", "status": "not_started"}
+    {"name": "Gym — Pull Day (Back + Biceps)", "category": "fitness", "priority": "high", "status": "not_started"}
   ],
   "milestones": [
-    {"week": 1, "theme": "Foundation & Pipeline", "dates": "Mar 30 \u2013 Apr 5", "kpis": "10 videos analyzed, 5 coach names, dev env running", "status": "current"},
-    {"week": 2, "theme": "MVP Core Build", "dates": "Apr 6 \u2013 Apr 12", "kpis": "50 videos, 10 emails sent, pipeline demo", "status": "upcoming"},
-    {"week": 3, "theme": "Validation & Traction", "dates": "Apr 13 \u2013 Apr 19", "kpis": "200 clips, 5 calls, live landing page", "status": "upcoming"},
-    {"week": 4, "theme": "Demo & Application", "dates": "Apr 20 \u2013 Apr 26", "kpis": "Demo video, draft app, 2+ testimonials", "status": "upcoming"},
-    {"week": 5, "theme": "Polish & Submit", "dates": "Apr 27 \u2013 May 3", "kpis": "YC submitted, 3+ accelerator apps sent", "status": "upcoming"}
+    {"week": 1, "theme": "Foundation & Pipeline", "dates": "Mar 30 – Apr 5", "kpis": "10 videos analyzed, 5 coach names, dev env running", "status": "current"},
+    {"week": 2, "theme": "MVP Core Build", "dates": "Apr 6 – Apr 12", "kpis": "50 videos, 10 emails sent, pipeline demo", "status": "upcoming"},
+    {"week": 3, "theme": "Validation & Traction", "dates": "Apr 13 – Apr 19", "kpis": "200 clips, 5 calls, live landing page", "status": "upcoming"},
+    {"week": 4, "theme": "Demo & Application", "dates": "Apr 20 – Apr 26", "kpis": "Demo video, draft app, 2+ testimonials", "status": "upcoming"},
+    {"week": 5, "theme": "Polish & Submit", "dates": "Apr 27 – May 3", "kpis": "YC submitted, 3+ accelerator apps sent", "status": "upcoming"}
   ],
   "affirmations": [
     "I am building something that will change how coaches develop athletes. God has placed this vision in me for a reason.",
-    "I am disciplined, focused, and relentless. I do not waste time \u2014 every hour moves me closer to my goal.",
+    "I am disciplined, focused, and relentless. I do not waste time — every hour moves me closer to my goal.",
     "I am not behind. I am exactly where God needs me to be, and I will steward this season with excellence.",
-    "I ship fast, talk to users, and iterate. Perfection is the enemy \u2014 progress is the standard.",
+    "I ship fast, talk to users, and iterate. Perfection is the enemy — progress is the standard.",
     "My body is my instrument. I train it, fuel it, and rest it so I can perform at my best.",
     "I am a founder. I solve problems, build products, and create value. This is who I am becoming.",
     "I trust God's timing. I work as if it depends on me and pray as if it depends on Him.",
-    "Today I will do one thing that scares me \u2014 one conversation, one cold email, one bold ask.",
+    "Today I will do one thing that scares me — one conversation, one cold email, one bold ask.",
     "I am grateful for Berkeley, for this opportunity, for my family, and for the strength to pursue this dream.",
     "36 days. No time to be perfect. Time to be real. Let's go."
   ],
@@ -106,12 +104,12 @@
       "date": "2026-03-29",
       "day_name": "Sunday",
       "sprint_day": 1,
-      "summary": "Setup day. Command Center system initialized. Goals cascaded. Tracker created. Evening session complete.",
+      "summary": "Setup day. Command Center system initialized. Goals cascaded. Tracker created. Dashboard deployed to Vercel.",
       "bible": "Isaiah 1 (completed previously)",
       "affirmation_index": 0,
-      "tasks_completed": ["Command Center setup"],
+      "tasks_completed": ["Command Center setup", "Dashboard deployed", "GitHub repo created"],
       "tasks_incomplete": [],
-      "notes": "Day 1 of 36-day sprint. System initialized."
+      "notes": "Day 1 of 36-day sprint. Late night — adjusted Monday wake-up to 7 AM."
     }
   ]
 }
