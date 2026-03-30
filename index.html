@@ -2,15 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Command Center</title>
-  <meta name="description" content="Personal accountability dashboard">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AGEG Hub</title>
+  <meta name="description" content="AGEG Hub — Personal accountability dashboard">
   <meta name="theme-color" content="#09090b">
+  <meta name="color-scheme" content="dark">
+
+  <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="CmdCenter">
+  <meta name="apple-mobile-web-app-title" content="AGEG Hub">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="icon-192.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+  <!-- iOS Splash Screens (inline SVG approach) -->
+  <link rel="apple-touch-startup-image" href="apple-touch-icon.png">
+
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='36' fill='%2309090b'/><text x='90' y='115' text-anchor='middle' font-family='system-ui' font-size='96' font-weight='800' fill='%233b82f6'>C</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,9 +32,11 @@
     :root {
       --bg: #09090b;
       --surface: #18181b;
+      --surface-raised: #1e1e22;
       --border: #27272a;
       --border-hover: #3f3f46;
       --accent: #3b82f6;
+      --accent-glow: rgba(59,130,246,0.15);
       --career: #22c55e;
       --faith: #a78bfa;
       --fitness: #f59e0b;
@@ -36,6 +50,16 @@
       --radius: 12px;
       --radius-sm: 8px;
       --radius-pill: 20px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    html {
+      background: var(--bg);
+      /* Prevent overscroll bounce showing white */
+      overscroll-behavior-y: none;
     }
 
     body {
@@ -45,10 +69,26 @@
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      padding-bottom: env(safe-area-inset-bottom, 0);
+      padding-bottom: calc(1rem + var(--safe-bottom));
+      /* Smooth scrolling on iOS */
+      -webkit-overflow-scrolling: touch;
+      /* Prevent text size adjust on rotation */
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      /* Prevent pull to refresh in standalone mode */
+      overscroll-behavior-y: contain;
     }
 
-    .container { max-width: 1400px; margin: 0 auto; padding: 0 1rem 2rem; }
+    /* Tap highlight removal for iOS */
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* Smooth momentum scrolling */
+    .scrollable { -webkit-overflow-scrolling: touch; overflow-y: auto; }
+
+    .container {
+      max-width: 1400px; margin: 0 auto;
+      padding: 0 calc(1rem + var(--safe-left)) 2rem calc(1rem + var(--safe-right));
+    }
     @media (min-width: 1024px) { .container { padding: 0 1.5rem 3rem; } }
 
     .section-label {
@@ -66,28 +106,32 @@
 
     .section { margin-bottom: 1.25rem; }
 
-    /* Header */
+    /* Header — safe area aware */
     .header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(9,9,11,0.85); backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(9,9,11,0.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: 0.75rem 1rem;
+      padding: calc(0.6rem + var(--safe-top)) calc(1rem + var(--safe-right)) 0.6rem calc(1rem + var(--safe-left));
     }
-    @media (min-width: 1024px) { .header { padding: 0.75rem 1.5rem; } }
-    .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    @media (min-width: 1024px) { .header { padding: calc(0.75rem + var(--safe-top)) 1.5rem 0.75rem; } }
+    .header-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    }
     .header-title {
-      font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;
-      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--accent), #a78bfa, #c084fc);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     @media (min-width: 768px) { .header-title { font-size: 1.5rem; } }
-    .header-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .header-meta { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
     .pill {
-      display: inline-flex; align-items: center; padding: 0.2rem 0.6rem;
-      border-radius: var(--radius-pill); font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-pill); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.5px; white-space: nowrap;
     }
     .pill-sprint { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
     .pill-day { background: rgba(250,250,250,0.06); color: var(--text-secondary); font-weight: 500; }
@@ -95,21 +139,27 @@
 
     /* Affirmation */
     .affirmation-card {
-      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(167,139,250,0.08));
-      border: 1px solid rgba(167,139,250,0.15);
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(167,139,250,0.08), rgba(192,132,252,0.05));
+      border: 1px solid rgba(167,139,250,0.12);
       border-radius: var(--radius); padding: 1.25rem;
+      position: relative; overflow: hidden;
     }
-    .affirmation-text { font-style: italic; font-size: 0.95rem; color: var(--text); line-height: 1.6; }
-    .affirmation-ref { font-size: 0.75rem; color: var(--faith); margin-top: 0.5rem; font-weight: 600; }
+    .affirmation-card::before {
+      content: ''; position: absolute; top: -50%; right: -30%; width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .affirmation-text { font-style: italic; font-size: 0.95rem; color: var(--text); line-height: 1.7; position: relative; }
+    .affirmation-ref { font-size: 0.7rem; color: var(--faith); margin-top: 0.5rem; font-weight: 600; position: relative; }
 
     /* Progress rings */
     .progress-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
     @media (min-width: 768px) { .progress-grid { grid-template-columns: repeat(4, 1fr); } }
-    .ring-card { display: flex; flex-direction: column; align-items: center; padding: 1rem; }
+    .ring-card { display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem; }
     .ring-svg { width: 80px; height: 80px; transform: rotate(-90deg); }
-    .ring-bg { fill: none; stroke: var(--border); stroke-width: 6; }
-    .ring-fg { fill: none; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 800ms ease; }
-    .ring-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 0.5rem; text-align: center; }
+    .ring-bg { fill: none; stroke: var(--border); stroke-width: 5; }
+    .ring-fg { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1000ms cubic-bezier(0.4, 0, 0.2, 1); }
+    .ring-label { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 0.5rem; text-align: center; }
     .ring-value {
       font-size: 0.8rem; font-weight: 700; fill: var(--text);
       transform: rotate(90deg); transform-origin: center;
@@ -133,24 +183,26 @@
     .goal-cascade-item strong { color: var(--text-dim); font-weight: 600; font-size: 0.65rem; text-transform: uppercase; }
     .goal-toggle {
       font-size: 0.65rem; color: var(--text-dim); cursor: pointer; margin-top: 0.5rem;
-      background: none; border: none; padding: 0; font-family: inherit;
+      background: none; border: none; padding: 0.25rem 0; font-family: inherit;
+      min-height: 44px; display: flex; align-items: center;
     }
     .goal-toggle:hover { color: var(--text-secondary); }
 
     /* Schedule */
     .schedule-item {
       display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.6rem 0.75rem; border-radius: var(--radius-sm);
-      cursor: pointer; transition: all 200ms ease; user-select: none;
-      -webkit-user-select: none; min-height: 44px;
+      padding: 0.65rem 0.75rem; border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 150ms ease; user-select: none;
+      -webkit-user-select: none; min-height: 48px;
+      border: 1px solid transparent;
     }
-    .schedule-item:active { transform: scale(0.98); }
-    .schedule-item:hover { background: rgba(255,255,255,0.03); }
-    .schedule-item.done { opacity: 0.45; }
-    .schedule-time { font-size: 0.7rem; color: var(--text-dim); font-weight: 600; min-width: 70px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .schedule-item:active { transform: scale(0.985); background: rgba(255,255,255,0.02); }
+    .schedule-item.done { opacity: 0.4; }
+    .schedule-item.done { border-left: 2px solid var(--success); }
+    .schedule-time { font-size: 0.7rem; color: var(--text-dim); font-weight: 600; min-width: 72px; white-space: nowrap; font-variant-numeric: tabular-nums; }
     .schedule-activity { flex: 1; font-size: 0.8rem; font-weight: 400; }
     .schedule-item.done .schedule-activity { text-decoration: line-through; }
-    .schedule-check { font-size: 0.75rem; opacity: 0; transition: opacity 200ms; }
+    .schedule-check { font-size: 0.8rem; opacity: 0; transition: opacity 150ms; }
     .schedule-item.done .schedule-check { opacity: 1; color: var(--success); }
     .cat-pill {
       font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
@@ -163,34 +215,34 @@
 
     /* Tasks */
     .task-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-    .task-counter { font-size: 0.8rem; font-weight: 700; }
+    .task-counter {
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.15rem 0.5rem; border-radius: var(--radius-pill);
+    }
     .task-item {
       display: flex; align-items: center; gap: 0.75rem;
       padding: 0.65rem 0.75rem; border-radius: var(--radius-sm);
-      cursor: pointer; transition: all 200ms ease; user-select: none;
-      -webkit-user-select: none; min-height: 48px;
+      cursor: pointer; transition: all 150ms ease; user-select: none;
+      -webkit-user-select: none; min-height: 52px;
     }
-    .task-item:active { transform: scale(0.98); }
-    .task-item:hover { background: rgba(255,255,255,0.03); }
+    .task-item:active { transform: scale(0.985); }
+    .task-item:hover { background: rgba(255,255,255,0.02); }
     .task-checkbox {
-      width: 22px; height: 22px; min-width: 22px; border-radius: 5px;
+      width: 24px; height: 24px; min-width: 24px; border-radius: 6px;
       border: 2px solid var(--border-hover); display: flex; align-items: center;
-      justify-content: center; transition: all 200ms ease; font-size: 0.7rem;
+      justify-content: center; transition: all 200ms ease; font-size: 0.75rem;
     }
     .task-item.done .task-checkbox {
       background: var(--success); border-color: var(--success); color: #fff;
+      box-shadow: 0 0 8px rgba(34,197,94,0.3);
     }
     .task-name { flex: 1; font-size: 0.85rem; font-weight: 400; transition: all 200ms ease; }
-    .task-item.done .task-name { text-decoration: line-through; opacity: 0.45; }
+    .task-item.done .task-name { text-decoration: line-through; opacity: 0.4; }
     .task-meta { display: flex; gap: 0.35rem; align-items: center; }
     .priority-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .priority-dot.high { background: var(--error); }
+    .priority-dot.high { background: var(--error); box-shadow: 0 0 4px rgba(239,68,68,0.4); }
     .priority-dot.medium { background: var(--warning); }
     .priority-dot.low { background: var(--text-dim); }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-    }
 
     /* Milestones */
     .milestone-item {
@@ -198,6 +250,7 @@
       border-left: 3px solid var(--border);
     }
     .milestone-item.current { border-left-color: var(--warning); background: rgba(245,158,11,0.04); }
+    .milestone-item.done { border-left-color: var(--success); }
     .milestone-item + .milestone-item { margin-top: 0.5rem; }
     .milestone-week { font-size: 0.7rem; font-weight: 700; color: var(--text-dim); min-width: 28px; }
     .milestone-body { flex: 1; }
@@ -213,62 +266,125 @@
     .status-badge.done { background: rgba(34,197,94,0.12); color: var(--success); }
 
     /* Isaiah grid */
-    .isaiah-grid { display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; }
-    @media (max-width: 480px) { .isaiah-grid { grid-template-columns: repeat(8, 1fr); } }
+    .isaiah-grid { display: grid; grid-template-columns: repeat(11, 1fr); gap: 4px; }
+    @media (max-width: 480px) { .isaiah-grid { grid-template-columns: repeat(8, 1fr); gap: 3px; } }
     .isaiah-ch {
       aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-      font-size: 0.55rem; font-weight: 600; border-radius: 4px;
+      font-size: 0.55rem; font-weight: 600; border-radius: 5px;
       background: rgba(255,255,255,0.03); color: var(--text-dim);
+      transition: all 200ms ease;
     }
-    .isaiah-ch.completed { background: rgba(167,139,250,0.25); color: var(--faith); }
-    .isaiah-ch.today { border: 1.5px solid var(--faith); color: var(--faith); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .isaiah-ch.completed { background: rgba(167,139,250,0.2); color: var(--faith); }
+    .isaiah-ch.today {
+      border: 1.5px solid var(--faith); color: var(--faith);
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(167,139,250,0.2);
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(167,139,250,0.2); } 50% { opacity: 0.65; box-shadow: 0 0 4px rgba(167,139,250,0.1); } }
 
     /* Gym split */
     .gym-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
+    @media (max-width: 400px) { .gym-grid { gap: 0.3rem; } }
     .gym-day {
-      text-align: center; padding: 0.6rem 0.25rem; border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
+      text-align: center; padding: 0.65rem 0.2rem; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); transition: all 200ms ease;
     }
-    .gym-day.today { border-color: var(--accent); box-shadow: 0 0 12px rgba(59,130,246,0.2); }
-    .gym-day.rest { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.2); }
-    .gym-day-label { font-size: 0.6rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; }
-    .gym-day-split { font-size: 0.75rem; font-weight: 700; margin-top: 0.2rem; }
+    .gym-day.today { border-color: var(--accent); box-shadow: 0 0 16px rgba(59,130,246,0.2), inset 0 0 12px rgba(59,130,246,0.05); }
+    .gym-day.rest { background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.15); }
+    .gym-day-label { font-size: 0.55rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; }
+    .gym-day-split { font-size: 0.7rem; font-weight: 700; margin-top: 0.2rem; }
+    @media (max-width: 400px) {
+      .gym-day-label { font-size: 0.5rem; }
+      .gym-day-split { font-size: 0.6rem; }
+    }
 
     /* Daily log */
-    .log-entry { padding: 0.75rem; border-radius: var(--radius-sm); background: rgba(255,255,255,0.02); }
+    .log-entry {
+      padding: 0.75rem; border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.02);
+      border-left: 2px solid var(--border);
+    }
     .log-entry + .log-entry { margin-top: 0.5rem; }
     .log-date { font-size: 0.7rem; font-weight: 700; color: var(--accent); }
     .log-summary { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
     .log-meta { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
+    .show-more-btn {
+      display: block; width: 100%; margin-top: 0.5rem; padding: 0.5rem;
+      background: none; border: 1px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--text-dim); font-size: 0.7rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; min-height: 44px;
+    }
+    .show-more-btn:active { background: rgba(255,255,255,0.02); }
 
     /* Footer */
-    .footer { text-align: center; padding: 2rem 0 1rem; font-size: 0.65rem; color: var(--text-dim); }
+    .footer {
+      text-align: center; padding: 2rem 0 1rem;
+      font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.5px;
+    }
+    .footer-brand {
+      font-weight: 700; letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-    /* Checkbox bounce */
+    /* Animations */
     @keyframes checkBounce { 0% { transform: scale(1); } 30% { transform: scale(0.92); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
-    .bounce { animation: checkBounce 300ms ease; }
+    .bounce { animation: checkBounce 250ms ease; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .section { animation: fadeInUp 400ms ease backwards; }
+    .section:nth-child(2) { animation-delay: 50ms; }
+    .section:nth-child(3) { animation-delay: 100ms; }
+    .section:nth-child(4) { animation-delay: 150ms; }
+    .section:nth-child(5) { animation-delay: 200ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* Loading state */
+    .loading {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 4rem 1rem; gap: 1rem;
+    }
+    .loading-spinner {
+      width: 32px; height: 32px; border: 3px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1px; }
+
+    /* Pull indicator for standalone */
+    @media (display-mode: standalone) {
+      body { overscroll-behavior-y: none; }
+    }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="header-inner">
-      <span class="header-title">COMMAND CENTER</span>
+      <span class="header-title">AGEG HUB</span>
       <div class="header-meta" id="headerMeta"></div>
     </div>
   </header>
 
   <main class="container" id="app">
-    <p style="color:var(--text-dim);text-align:center;padding:3rem 0;">Loading dashboard...</p>
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading dashboard...</div>
+    </div>
   </main>
 
   <script>
     // --- Service Worker Registration ---
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then((reg) => {
-        // Check for updates every time the page is opened
         reg.update();
-        // Auto-activate new service worker immediately
         reg.addEventListener('updatefound', () => {
           const newSW = reg.installing;
           newSW.addEventListener('statechange', () => {
@@ -286,6 +402,16 @@
       window.addEventListener('pagehide', () => {
         if (navigator.serviceWorker.controller) {
           navigator.serviceWorker.controller.postMessage('CLEAR_CACHE');
+        }
+      });
+
+      // When app becomes visible again, fetch fresh data
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          init();
+          if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage('FORCE_UPDATE');
+          }
         }
       });
     }
@@ -338,9 +464,9 @@
       // Header
       $('#headerMeta').innerHTML = `
         <span class="pill pill-sprint">36-DAY SPRINT</span>
-        <span class="pill pill-day">Day ${sprintDay} of 36</span>
-        <span class="pill pill-deadline">YC: May 4 (${ycDays}d)</span>
-        <span class="pill pill-day">${d.current_day.day_name}, ${today}</span>
+        <span class="pill pill-day">Day ${sprintDay}/36</span>
+        <span class="pill pill-deadline">YC: ${ycDays}d</span>
+        <span class="pill pill-day">${d.current_day.day_name}</span>
       `;
 
       // Affirmation
@@ -357,11 +483,11 @@
       const scripture = d.daily_scripture;
       html += `<section class="section">
         <div class="affirmation-card">
-          <div class="affirmation-text">"${affirmation}"</div>
+          <div class="affirmation-text">\u201C${affirmation}\u201D</div>
           <div class="affirmation-ref">Day ${sprintDay} Affirmation</div>
-          ${scripture ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(167,139,250,0.15);">
-            <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">"${scripture.verse}"</div>
-            <div style="font-size:0.7rem;color:var(--faith);font-weight:600;margin-top:0.25rem;">${scripture.reference}</div>
+          ${scripture ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(167,139,250,0.12);">
+            <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;font-style:italic;">\u201C${scripture.verse}\u201D</div>
+            <div style="font-size:0.7rem;color:var(--faith);font-weight:600;margin-top:0.3rem;">${scripture.reference}</div>
           </div>` : ''}
         </div>
       </section>`;
@@ -379,7 +505,7 @@
 
       // 3. Goal cards
       html += `<section class="section">
-        <div class="section-label">Today's Goals</div>
+        <div class="section-label">Today\u2019s Goals</div>
         <div class="goals-grid">`;
       for (const [cat, goals] of Object.entries(d.goals)) {
         const isMobile = window.innerWidth < 1024;
@@ -391,14 +517,14 @@
             <div class="goal-cascade-item"><strong>Monthly</strong><br>${goals.monthly}</div>
             <div class="goal-cascade-item"><strong>Weekly</strong><br>${goals.weekly}</div>
           </div>
-          <button class="goal-toggle" onclick="toggleCascade('${cat}')">${isMobile ? 'Show goals cascade ▾' : 'Hide cascade ▴'}</button>
+          <button class="goal-toggle" onclick="toggleCascade('${cat}')">${isMobile ? 'Show goals cascade \u25BE' : 'Hide cascade \u25B4'}</button>
         </div>`;
       }
       html += `</div></section>`;
 
       // 4. Schedule
       html += `<section class="section">
-        <div class="section-label">Today's Schedule</div>
+        <div class="section-label">Today\u2019s Schedule</div>
         <div class="card" style="padding:0.25rem 0;">`;
       d.schedule.forEach((s, i) => {
         const key = lsKey('sched', today, i);
@@ -407,7 +533,7 @@
           <span class="schedule-time">${s.time}</span>
           <span class="schedule-activity">${s.activity}</span>
           <span class="cat-pill" data-cat="${s.category}">${s.category}</span>
-          <span class="schedule-check">✓</span>
+          <span class="schedule-check">\u2713</span>
         </div>`;
       });
       html += `</div></section>`;
@@ -420,18 +546,18 @@
       });
       const doneCount = taskStates.filter(s => s === 'done').length;
       const totalTasks = d.tasks.length;
-      const counterColor = doneCount === 0 ? '#ef4444' : doneCount === totalTasks ? '#22c55e' : '#f59e0b';
+      const counterColor = doneCount === 0 ? 'var(--error)' : doneCount === totalTasks ? 'var(--success)' : 'var(--warning)';
+      const counterBg = doneCount === 0 ? 'rgba(239,68,68,0.1)' : doneCount === totalTasks ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)';
 
       html += `<section class="section">
         <div class="section-label">
           <div class="task-header">
-            <span>Today's Tasks</span>
-            <span class="task-counter" id="taskCounter" style="color:${counterColor}">${doneCount}/${totalTasks} Done</span>
+            <span>Today\u2019s Tasks</span>
+            <span class="task-counter" id="taskCounter" style="color:${counterColor};background:${counterBg}">${doneCount}/${totalTasks} Done</span>
           </div>
         </div>
         <div class="card" style="padding:0.25rem 0;" id="taskList">`;
 
-      // Sort: incomplete first
       const indices = d.tasks.map((_, i) => i);
       indices.sort((a, b) => {
         const aD = taskStates[a] === 'done' ? 1 : 0;
@@ -443,7 +569,7 @@
         const t = d.tasks[i];
         const isDone = taskStates[i] === 'done';
         html += `<div class="task-item ${isDone ? 'done' : ''}" data-task-idx="${i}" onclick="toggleTask(this, ${i}, '${today}')">
-          <div class="task-checkbox">${isDone ? '✓' : ''}</div>
+          <div class="task-checkbox">${isDone ? '\u2713' : ''}</div>
           <span class="task-name">${t.name}</span>
           <div class="task-meta">
             <span class="cat-pill" data-cat="${t.category}">${t.category}</span>
@@ -500,22 +626,35 @@
       html += `</div></div></section>`;
 
       // 9. Daily Log
+      const allLogs = [...d.daily_log].reverse();
+      const visibleLogs = allLogs.slice(0, 7);
+      const hasMore = allLogs.length > 7;
       html += `<section class="section">
         <div class="section-label">Daily Log</div>
-        <div class="card" style="padding:0.5rem;">`;
-      const logs = [...d.daily_log].reverse().slice(0, 7);
-      logs.forEach(l => {
+        <div class="card" style="padding:0.5rem;" id="logContainer">`;
+      visibleLogs.forEach(l => {
         html += `<div class="log-entry">
-          <div class="log-date">Day ${l.sprint_day} — ${l.day_name}, ${l.date}</div>
+          <div class="log-date">Day ${l.sprint_day} \u2014 ${l.day_name}, ${l.date}</div>
           <div class="log-summary">${l.summary}</div>
-          <div class="log-meta">${l.bible} · ${l.tasks_completed.length} tasks done${l.notes ? ' · ' + l.notes : ''}</div>
+          <div class="log-meta">${l.bible} \u00B7 ${l.tasks_completed.length} tasks done${l.notes ? ' \u00B7 ' + l.notes : ''}</div>
         </div>`;
       });
+      if (hasMore) {
+        html += `<button class="show-more-btn" onclick="showAllLogs()">Show ${allLogs.length - 7} more entries</button>`;
+      }
       html += `</div></section>`;
+
+      // Store extra logs for show more
+      if (hasMore) {
+        window._extraLogs = allLogs.slice(7);
+      }
 
       // Footer
       const updatedDate = new Date(d.last_updated);
-      html += `<footer class="footer">Last updated: ${updatedDate.toLocaleString()}</footer>`;
+      html += `<footer class="footer">
+        <span class="footer-brand">AGEG HUB</span><br>
+        Last updated: ${updatedDate.toLocaleString()}
+      </footer>`;
 
       $('#app').innerHTML = html;
     }
@@ -529,9 +668,9 @@
 
       el.classList.toggle('done');
       const cb = el.querySelector('.task-checkbox');
-      cb.textContent = isDone ? '' : '✓';
+      cb.textContent = isDone ? '' : '\u2713';
       cb.classList.add('bounce');
-      setTimeout(() => cb.classList.remove('bounce'), 300);
+      setTimeout(() => cb.classList.remove('bounce'), 250);
 
       // Update counter
       const allItems = $$('.task-item');
@@ -540,7 +679,10 @@
       const counter = $('#taskCounter');
       if (counter) {
         counter.textContent = `${done}/${total} Done`;
-        counter.style.color = done === 0 ? '#ef4444' : done === total ? '#22c55e' : '#f59e0b';
+        const c = done === 0 ? 'var(--error)' : done === total ? 'var(--success)' : 'var(--warning)';
+        const bg = done === 0 ? 'rgba(239,68,68,0.1)' : done === total ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)';
+        counter.style.color = c;
+        counter.style.background = bg;
       }
     }
 
@@ -555,7 +697,25 @@
       const el = document.getElementById(`cascade-${cat}`);
       const btn = el.nextElementSibling;
       el.classList.toggle('collapsed');
-      btn.textContent = el.classList.contains('collapsed') ? 'Show goals cascade ▾' : 'Hide cascade ▴';
+      btn.textContent = el.classList.contains('collapsed') ? 'Show goals cascade \u25BE' : 'Hide cascade \u25B4';
+    }
+
+    function showAllLogs() {
+      if (!window._extraLogs) return;
+      const container = $('#logContainer');
+      const btn = container.querySelector('.show-more-btn');
+      if (btn) btn.remove();
+      window._extraLogs.forEach(l => {
+        const div = document.createElement('div');
+        div.className = 'log-entry';
+        div.innerHTML = `
+          <div class="log-date">Day ${l.sprint_day} \u2014 ${l.day_name}, ${l.date}</div>
+          <div class="log-summary">${l.summary}</div>
+          <div class="log-meta">${l.bible} \u00B7 ${l.tasks_completed.length} tasks done${l.notes ? ' \u00B7 ' + l.notes : ''}</div>
+        `;
+        container.appendChild(div);
+      });
+      delete window._extraLogs;
     }
 
     // --- Boot ---
