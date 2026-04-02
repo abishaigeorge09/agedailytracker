@@ -7,8 +7,6 @@
   <meta name="description" content="AGEG Hub — Personal accountability dashboard">
   <meta name="theme-color" content="#09090b">
   <meta name="color-scheme" content="dark">
-
-  <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="AGEG Hub">
@@ -18,141 +16,86 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/svg+xml" href="icon-192.svg">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-
-  <!-- iOS Splash Screens (inline SVG approach) -->
   <link rel="apple-touch-startup-image" href="apple-touch-icon.png">
-
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg: #09090b;
-      --surface: #18181b;
-      --surface-raised: #1e1e22;
-      --border: #27272a;
-      --border-hover: #3f3f46;
-      --accent: #3b82f6;
-      --accent-glow: rgba(59,130,246,0.15);
-      --career: #22c55e;
-      --faith: #a78bfa;
-      --fitness: #f59e0b;
-      --personal: #64748b;
-      --text: #fafafa;
-      --text-secondary: #a1a1aa;
-      --text-dim: #52525b;
-      --success: #22c55e;
-      --warning: #f59e0b;
-      --error: #ef4444;
-      --radius: 12px;
-      --radius-sm: 8px;
-      --radius-pill: 20px;
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --safe-left: env(safe-area-inset-left, 0px);
-      --safe-right: env(safe-area-inset-right, 0px);
+      --bg: #09090b; --surface: #18181b; --surface-raised: #1e1e22;
+      --border: #27272a; --border-hover: #3f3f46;
+      --accent: #3b82f6; --accent-glow: rgba(59,130,246,0.15);
+      --career: #22c55e; --faith: #a78bfa; --fitness: #f59e0b; --personal: #64748b;
+      --text: #fafafa; --text-secondary: #a1a1aa; --text-dim: #52525b;
+      --success: #22c55e; --warning: #f59e0b; --error: #ef4444;
+      --radius: 12px; --radius-sm: 8px; --radius-pill: 20px;
+      --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px); --safe-right: env(safe-area-inset-right, 0px);
     }
-
-    html {
-      background: var(--bg);
-      /* Prevent overscroll bounce showing white */
-      overscroll-behavior-y: none;
-    }
-
+    html { background: var(--bg); overscroll-behavior-y: none; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      padding-bottom: calc(1rem + var(--safe-bottom));
-      /* Smooth scrolling on iOS */
-      -webkit-overflow-scrolling: touch;
-      /* Prevent text size adjust on rotation */
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-      /* Prevent pull to refresh in standalone mode */
-      overscroll-behavior-y: contain;
+      background: var(--bg); color: var(--text); line-height: 1.5;
+      -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;
+      padding-bottom: calc(5rem + var(--safe-bottom));
+      overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch;
     }
-
-    /* Tap highlight removal for iOS */
     * { -webkit-tap-highlight-color: transparent; }
-
-    /* Smooth momentum scrolling */
-    .scrollable { -webkit-overflow-scrolling: touch; overflow-y: auto; }
-
-    .container {
-      max-width: 1400px; margin: 0 auto;
-      padding: 0 calc(1rem + var(--safe-left)) 2rem calc(1rem + var(--safe-right));
-    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 1.25rem calc(1rem + var(--safe-left)) 2rem calc(1rem + var(--safe-right)); }
     @media (min-width: 1024px) { .container { padding: 0 1.5rem 3rem; } }
-
-    .section-label {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 0.75rem;
-    }
-
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1rem;
-      transition: border-color 200ms ease;
-    }
+    .section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 0.75rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; transition: border-color 200ms ease; }
     .card:hover { border-color: var(--border-hover); }
-    @media (min-width: 1024px) { .card { padding: 1.25rem; } }
-
     .section { margin-bottom: 1.25rem; }
 
-    /* Header — safe area aware */
     .header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(9,9,11,0.82);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(9,9,11,0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: calc(0.6rem + var(--safe-top)) calc(1rem + var(--safe-right)) 0.6rem calc(1rem + var(--safe-left));
+      padding: calc(1rem + var(--safe-top)) calc(1rem + var(--safe-right)) 0.6rem calc(1rem + var(--safe-left));
     }
-    @media (min-width: 1024px) { .header { padding: calc(0.75rem + var(--safe-top)) 1.5rem 0.75rem; } }
-    .header-inner {
-      max-width: 1400px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
-    }
-    .header-title {
-      font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
-      background: linear-gradient(135deg, var(--accent), #a78bfa, #c084fc);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    @media (min-width: 768px) { .header-title { font-size: 1.5rem; } }
+    .header-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .header-left { display: flex; align-items: center; gap: 0.75rem; }
+    .header-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(135deg, var(--accent), #a78bfa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .points-badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); font-size: 0.7rem; font-weight: 700; background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,179,8,0.15)); border: 1px solid rgba(245,158,11,0.3); color: var(--warning); }
     .header-meta { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-    .pill {
-      display: inline-flex; align-items: center; padding: 0.2rem 0.55rem;
-      border-radius: var(--radius-pill); font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 0.5px; white-space: nowrap;
-    }
+    .pill { display: inline-flex; align-items: center; padding: 0.2rem 0.55rem; border-radius: var(--radius-pill); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
     .pill-sprint { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
     .pill-day { background: rgba(250,250,250,0.06); color: var(--text-secondary); font-weight: 500; }
     .pill-deadline { background: rgba(239,68,68,0.1); color: var(--error); border: 1px solid rgba(239,68,68,0.25); }
 
-    /* Affirmation */
-    .affirmation-card {
-      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(167,139,250,0.08), rgba(192,132,252,0.05));
-      border: 1px solid rgba(167,139,250,0.12);
-      border-radius: var(--radius); padding: 1.25rem;
-      position: relative; overflow: hidden;
-    }
-    .affirmation-card::before {
-      content: ''; position: absolute; top: -50%; right: -30%; width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .affirmation-text { font-style: italic; font-size: 0.95rem; color: var(--text); line-height: 1.7; position: relative; }
-    .affirmation-ref { font-size: 0.7rem; color: var(--faith); margin-top: 0.5rem; font-weight: 600; position: relative; }
+    .countdown-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(167,139,250,0.95)); backdrop-filter: blur(10px); padding: calc(var(--safe-top) + 0.5rem) 1rem 0.5rem; display: none; text-align: center; font-size: 0.8rem; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .countdown-banner.show { display: block; }
+    .countdown-timer { font-size: 1.1rem; font-weight: 800; margin-left: 0.5rem; font-variant-numeric: tabular-nums; }
 
-    /* Progress rings */
+    .cal-aff-row { display: flex; flex-direction: column; gap: 1rem; }
+    @media (min-width: 768px) { .cal-aff-row { flex-direction: row; align-items: center; gap: 1.5rem; } .cal-aff-row .cal-side { flex: 0 0 280px; } .cal-aff-row .aff-side { flex: 1; } }
+    .cal-wrapper { max-width: 320px; }
+    @media (min-width: 768px) { .cal-wrapper { max-width: 280px; } }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+    .cal-header { font-size: 0.5rem; font-weight: 700; color: var(--text-dim); text-align: center; padding: 0.2rem 0; text-transform: uppercase; }
+    .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 500; border-radius: 4px; cursor: default; color: var(--text-dim); transition: all 150ms ease; }
+    .cal-day.has-data { color: var(--text-secondary); cursor: pointer; background: rgba(59,130,246,0.06); }
+    .cal-day.has-data:active { transform: scale(0.9); }
+    .cal-day.today { background: var(--accent); color: #fff; font-weight: 700; }
+    .cal-day.selected { outline: 1.5px solid var(--accent); outline-offset: 1px; }
+    .cal-day.empty { visibility: hidden; }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; }
+    .cal-nav-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); border-radius: 4px; padding: 0.15rem 0.4rem; font-size: 0.6rem; cursor: pointer; min-height: 28px; font-family: inherit; }
+    .cal-nav-btn:active { background: var(--surface); }
+    .cal-month { font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); }
+    .log-entry { padding: 0.75rem; border-radius: var(--radius-sm); background: rgba(255,255,255,0.02); border-left: 2px solid var(--border); }
+    .log-entry + .log-entry { margin-top: 0.5rem; }
+    .log-date { font-size: 0.7rem; font-weight: 700; color: var(--accent); }
+    .log-summary { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+    .log-meta { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+    .affirmation-card { background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(167,139,250,0.08), rgba(192,132,252,0.05)); border: 1px solid rgba(167,139,250,0.12); border-radius: var(--radius); padding: 1.25rem; position: relative; overflow: hidden; }
+    .affirmation-text { font-style: italic; font-size: 0.95rem; color: var(--text); line-height: 1.7; }
+    .affirmation-ref { font-size: 0.7rem; color: var(--faith); margin-top: 0.5rem; font-weight: 600; }
+
     .progress-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
     @media (min-width: 768px) { .progress-grid { grid-template-columns: repeat(4, 1fr); } }
     .ring-card { display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem; }
@@ -160,12 +103,8 @@
     .ring-bg { fill: none; stroke: var(--border); stroke-width: 5; }
     .ring-fg { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1000ms cubic-bezier(0.4, 0, 0.2, 1); }
     .ring-label { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 0.5rem; text-align: center; }
-    .ring-value {
-      font-size: 0.8rem; font-weight: 700; fill: var(--text);
-      transform: rotate(90deg); transform-origin: center;
-    }
+    .ring-value { font-size: 0.8rem; font-weight: 700; fill: var(--text); transform: rotate(90deg); transform-origin: center; }
 
-    /* Goal cards */
     .goals-grid { display: grid; gap: 0.75rem; }
     @media (min-width: 768px) { .goals-grid { grid-template-columns: repeat(3, 1fr); } }
     .goal-card { border-left: 3px solid; }
@@ -181,74 +120,42 @@
     .goal-cascade.collapsed { max-height: 0; }
     .goal-cascade-item { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.35rem; }
     .goal-cascade-item strong { color: var(--text-dim); font-weight: 600; font-size: 0.65rem; text-transform: uppercase; }
-    .goal-toggle {
-      font-size: 0.65rem; color: var(--text-dim); cursor: pointer; margin-top: 0.5rem;
-      background: none; border: none; padding: 0.25rem 0; font-family: inherit;
-      min-height: 44px; display: flex; align-items: center;
-    }
-    .goal-toggle:hover { color: var(--text-secondary); }
+    .goal-toggle { font-size: 0.65rem; color: var(--text-dim); cursor: pointer; margin-top: 0.5rem; background: none; border: none; padding: 0.25rem 0; font-family: inherit; min-height: 44px; display: flex; align-items: center; }
 
-    /* Schedule */
-    .schedule-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.65rem 0.75rem; border-radius: var(--radius-sm);
-      cursor: pointer; transition: all 150ms ease; user-select: none;
-      -webkit-user-select: none; min-height: 48px;
-      border: 1px solid transparent;
-    }
-    .schedule-item:active { transform: scale(0.985); background: rgba(255,255,255,0.02); }
-    .schedule-item.done { opacity: 0.4; }
-    .schedule-item.done { border-left: 2px solid var(--success); }
+    .schedule-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: var(--radius-sm); cursor: pointer; transition: all 150ms ease; user-select: none; -webkit-user-select: none; min-height: 48px; }
+    .schedule-item:active { transform: scale(0.985); }
+    .schedule-item.done { opacity: 0.4; border-left: 2px solid var(--success); }
+    .schedule-item.slacked { opacity: 0.5; border-left: 2px solid var(--warning); }
+    .schedule-item.postponed { opacity: 0.5; border-left: 2px solid var(--text-dim); }
     .schedule-time { font-size: 0.7rem; color: var(--text-dim); font-weight: 600; min-width: 72px; white-space: nowrap; font-variant-numeric: tabular-nums; }
     .schedule-activity { flex: 1; font-size: 0.8rem; font-weight: 400; }
     .schedule-item.done .schedule-activity { text-decoration: line-through; }
-    .schedule-check { font-size: 0.8rem; opacity: 0; transition: opacity 150ms; }
-    .schedule-item.done .schedule-check { opacity: 1; color: var(--success); }
-    .cat-pill {
-      font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
-      padding: 0.15rem 0.45rem; border-radius: var(--radius-pill); white-space: nowrap;
-    }
+    .schedule-status { font-size: 0.85rem; min-width: 24px; text-align: center; }
+    .cat-pill { font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.15rem 0.45rem; border-radius: var(--radius-pill); white-space: nowrap; }
     .cat-pill[data-cat="career"] { background: rgba(34,197,94,0.12); color: var(--career); }
     .cat-pill[data-cat="faith"] { background: rgba(167,139,250,0.12); color: var(--faith); }
     .cat-pill[data-cat="fitness"] { background: rgba(245,158,11,0.12); color: var(--fitness); }
     .cat-pill[data-cat="personal"] { background: rgba(100,116,139,0.12); color: var(--personal); }
 
-    /* Tasks */
     .task-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
-    .task-counter {
-      font-size: 0.75rem; font-weight: 700;
-      padding: 0.15rem 0.5rem; border-radius: var(--radius-pill);
-    }
-    .task-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.65rem 0.75rem; border-radius: var(--radius-sm);
-      cursor: pointer; transition: all 150ms ease; user-select: none;
-      -webkit-user-select: none; min-height: 52px;
-    }
+    .task-counter { font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: var(--radius-pill); }
+    .task-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: var(--radius-sm); cursor: pointer; transition: all 150ms ease; user-select: none; -webkit-user-select: none; min-height: 52px; }
     .task-item:active { transform: scale(0.985); }
-    .task-item:hover { background: rgba(255,255,255,0.02); }
-    .task-checkbox {
-      width: 24px; height: 24px; min-width: 24px; border-radius: 6px;
-      border: 2px solid var(--border-hover); display: flex; align-items: center;
-      justify-content: center; transition: all 200ms ease; font-size: 0.75rem;
-    }
-    .task-item.done .task-checkbox {
-      background: var(--success); border-color: var(--success); color: #fff;
-      box-shadow: 0 0 8px rgba(34,197,94,0.3);
-    }
+    .task-checkbox { width: 24px; height: 24px; min-width: 24px; border-radius: 6px; border: 2px solid var(--border-hover); display: flex; align-items: center; justify-content: center; transition: all 200ms ease; font-size: 0.75rem; }
+    .task-item.done .task-checkbox { background: var(--success); border-color: var(--success); color: #fff; box-shadow: 0 0 8px rgba(34,197,94,0.3); }
+    .task-item.slacked .task-checkbox { background: var(--warning); border-color: var(--warning); color: #fff; }
+    .task-item.postponed .task-checkbox { background: var(--text-dim); border-color: var(--text-dim); color: #fff; }
     .task-name { flex: 1; font-size: 0.85rem; font-weight: 400; transition: all 200ms ease; }
     .task-item.done .task-name { text-decoration: line-through; opacity: 0.4; }
+    .task-item.slacked .task-name { opacity: 0.5; }
+    .task-item.postponed .task-name { opacity: 0.5; font-style: italic; }
     .task-meta { display: flex; gap: 0.35rem; align-items: center; }
     .priority-dot { width: 6px; height: 6px; border-radius: 50%; }
     .priority-dot.high { background: var(--error); box-shadow: 0 0 4px rgba(239,68,68,0.4); }
     .priority-dot.medium { background: var(--warning); }
     .priority-dot.low { background: var(--text-dim); }
 
-    /* Milestones */
-    .milestone-item {
-      display: flex; gap: 0.75rem; padding: 0.75rem; border-radius: var(--radius-sm);
-      border-left: 3px solid var(--border);
-    }
+    .milestone-item { display: flex; gap: 0.75rem; padding: 0.75rem; border-radius: var(--radius-sm); border-left: 3px solid var(--border); }
     .milestone-item.current { border-left-color: var(--warning); background: rgba(245,158,11,0.04); }
     .milestone-item.done { border-left-color: var(--success); }
     .milestone-item + .milestone-item { margin-top: 0.5rem; }
@@ -257,468 +164,512 @@
     .milestone-theme { font-size: 0.85rem; font-weight: 600; }
     .milestone-dates { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.1rem; }
     .milestone-kpis { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; }
-    .status-badge {
-      font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-      padding: 0.15rem 0.45rem; border-radius: var(--radius-pill);
-    }
+    .status-badge { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.15rem 0.45rem; border-radius: var(--radius-pill); }
     .status-badge.current { background: rgba(245,158,11,0.15); color: var(--warning); }
     .status-badge.upcoming { background: rgba(239,68,68,0.1); color: var(--text-dim); }
     .status-badge.done { background: rgba(34,197,94,0.12); color: var(--success); }
-
-    /* Isaiah grid */
     .isaiah-grid { display: grid; grid-template-columns: repeat(11, 1fr); gap: 4px; }
     @media (max-width: 480px) { .isaiah-grid { grid-template-columns: repeat(8, 1fr); gap: 3px; } }
-    .isaiah-ch {
-      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-      font-size: 0.55rem; font-weight: 600; border-radius: 5px;
-      background: rgba(255,255,255,0.03); color: var(--text-dim);
-      transition: all 200ms ease;
-    }
+    .isaiah-ch { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; border-radius: 5px; background: rgba(255,255,255,0.03); color: var(--text-dim); }
     .isaiah-ch.completed { background: rgba(167,139,250,0.2); color: var(--faith); }
-    .isaiah-ch.today {
-      border: 1.5px solid var(--faith); color: var(--faith);
-      animation: pulse 2s ease-in-out infinite;
-      box-shadow: 0 0 8px rgba(167,139,250,0.2);
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(167,139,250,0.2); } 50% { opacity: 0.65; box-shadow: 0 0 4px rgba(167,139,250,0.1); } }
-
-    /* Gym split */
+    .isaiah-ch.today { border: 1.5px solid var(--faith); color: var(--faith); animation: pulse 2s ease-in-out infinite; box-shadow: 0 0 8px rgba(167,139,250,0.2); }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.65; } }
     .gym-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
-    @media (max-width: 400px) { .gym-grid { gap: 0.3rem; } }
-    .gym-day {
-      text-align: center; padding: 0.65rem 0.2rem; border-radius: var(--radius-sm);
-      border: 1px solid var(--border); transition: all 200ms ease;
-    }
-    .gym-day.today { border-color: var(--accent); box-shadow: 0 0 16px rgba(59,130,246,0.2), inset 0 0 12px rgba(59,130,246,0.05); }
+    .gym-day { text-align: center; padding: 0.65rem 0.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .gym-day.today { border-color: var(--accent); box-shadow: 0 0 16px rgba(59,130,246,0.2); }
     .gym-day.rest { background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.15); }
     .gym-day-label { font-size: 0.55rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; }
     .gym-day-split { font-size: 0.7rem; font-weight: 700; margin-top: 0.2rem; }
-    @media (max-width: 400px) {
-      .gym-day-label { font-size: 0.5rem; }
-      .gym-day-split { font-size: 0.6rem; }
-    }
+    .footer { text-align: center; padding: 2rem 0 1rem; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.5px; }
+    .footer-brand { font-weight: 700; letter-spacing: 2px; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    /* Daily log */
-    .log-entry {
-      padding: 0.75rem; border-radius: var(--radius-sm);
-      background: rgba(255,255,255,0.02);
-      border-left: 2px solid var(--border);
-    }
-    .log-entry + .log-entry { margin-top: 0.5rem; }
-    .log-date { font-size: 0.7rem; font-weight: 700; color: var(--accent); }
-    .log-summary { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
-    .log-meta { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
-    .show-more-btn {
-      display: block; width: 100%; margin-top: 0.5rem; padding: 0.5rem;
-      background: none; border: 1px solid var(--border); border-radius: var(--radius-sm);
-      color: var(--text-dim); font-size: 0.7rem; font-weight: 600; cursor: pointer;
-      font-family: inherit; min-height: 44px;
-    }
-    .show-more-btn:active { background: rgba(255,255,255,0.02); }
+    .fab { position: fixed; bottom: calc(1.5rem + var(--safe-bottom)); right: 1.5rem; z-index: 90; width: 56px; height: 56px; border-radius: 50%; border: none; background: linear-gradient(135deg, var(--accent), #7c3aed); color: #fff; font-size: 1.5rem; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(59,130,246,0.4); transition: all 200ms ease; }
+    .fab:active { transform: scale(0.92); }
 
-    /* Footer */
-    .footer {
-      text-align: center; padding: 2rem 0 1rem;
-      font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.5px;
-    }
-    .footer-brand {
-      font-weight: 700; letter-spacing: 2px;
-      background: linear-gradient(135deg, var(--accent), #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .modal-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.show { display: flex; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; }
+    .modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+    .modal label { display: block; font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 1px; }
+    .modal input, .modal select { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); font-family: inherit; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .modal input:focus, .modal select:focus { outline: none; border-color: var(--accent); }
+    .modal-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .modal-actions button { flex: 1; padding: 0.6rem; border-radius: var(--radius-sm); border: none; font-family: inherit; font-weight: 600; font-size: 0.8rem; cursor: pointer; min-height: 44px; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:active { opacity: 0.8; }
+    .btn-cancel { background: var(--border); color: var(--text); }
+    .modal-error { color: var(--error); font-size: 0.75rem; text-align: center; margin-bottom: 0.5rem; display: none; }
 
-    /* Animations */
+    .status-legend { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.6rem; color: var(--text-dim); }
+    .status-legend span { display: flex; align-items: center; gap: 0.25rem; }
+
     @keyframes checkBounce { 0% { transform: scale(1); } 30% { transform: scale(0.92); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
     .bounce { animation: checkBounce 250ms ease; }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .section { animation: fadeInUp 400ms ease backwards; }
     .section:nth-child(2) { animation-delay: 50ms; }
     .section:nth-child(3) { animation-delay: 100ms; }
-    .section:nth-child(4) { animation-delay: 150ms; }
-    .section:nth-child(5) { animation-delay: 200ms; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-    }
-
-    /* Loading state */
-    .loading {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 4rem 1rem; gap: 1rem;
-    }
-    .loading-spinner {
-      width: 32px; height: 32px; border: 3px solid var(--border);
-      border-top-color: var(--accent); border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+    .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 1rem; gap: 1rem; }
+    .loading-spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1px; }
-
-    /* Pull indicator for standalone */
-    @media (display-mode: standalone) {
-      body { overscroll-behavior-y: none; }
-    }
+    @media (display-mode: standalone) { body { overscroll-behavior-y: none; } }
   </style>
 </head>
 <body>
+  <div class="countdown-banner" id="countdownBanner">
+    <span id="countdownText"></span>
+    <span class="countdown-timer" id="countdownTimer"></span>
+  </div>
   <header class="header">
     <div class="header-inner">
-      <span class="header-title">AGEG HUB</span>
+      <div class="header-left">
+        <span class="header-title">AGEG HUB</span>
+        <span class="points-badge" id="pointsBadge">0 pts</span>
+      </div>
       <div class="header-meta" id="headerMeta"></div>
     </div>
   </header>
-
   <main class="container" id="app">
-    <div class="loading">
-      <div class="loading-spinner"></div>
-      <div class="loading-text">Loading dashboard...</div>
-    </div>
+    <div class="loading"><div class="loading-spinner"></div><div class="loading-text">Loading dashboard...</div></div>
   </main>
+  <button class="fab" id="fabAdd" onclick="showPinModal()">+</button>
+
+  <div class="modal-overlay" id="pinModal">
+    <div class="modal">
+      <h3>Enter PIN</h3>
+      <div class="modal-error" id="pinError">Incorrect PIN. Try again.</div>
+      <input type="password" id="pinInput" maxlength="4" placeholder="4-digit PIN" inputmode="numeric" pattern="[0-9]*">
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModals()">Cancel</button>
+        <button class="btn-primary" onclick="verifyPin()">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal">
+      <h3>Add New Task</h3>
+      <label>Task Name</label>
+      <input type="text" id="newTaskName" placeholder="What needs to be done?">
+      <label>Date</label>
+      <input type="date" id="newTaskDate">
+      <label>Category</label>
+      <select id="newTaskCat">
+        <option value="career">Career</option>
+        <option value="faith">Faith</option>
+        <option value="fitness">Fitness</option>
+        <option value="personal">Personal</option>
+      </select>
+      <label>Priority</label>
+      <select id="newTaskPriority">
+        <option value="high">High</option>
+        <option value="medium" selected>Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <label>Add to Schedule? (optional time)</label>
+      <input type="text" id="newTaskTime" placeholder="e.g. 2:00-3:00">
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModals()">Cancel</button>
+        <button class="btn-primary" onclick="addNewTask()">Add Task</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // --- Service Worker Registration ---
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then((reg) => {
-        reg.update();
-        reg.addEventListener('updatefound', () => {
-          const newSW = reg.installing;
-          newSW.addEventListener('statechange', () => {
-            if (newSW.state === 'activated') location.reload();
-          });
-        });
-      }).catch(() => {});
+    const SUPA_URL = 'https://xpkxjlzteolerjvntwns.supabase.co';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhwa3hqbHp0ZW9sZXJqdm50d25zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMjY0NDYsImV4cCI6MjA5MDcwMjQ0Nn0.NR_b1EqrEhBt8OERX7k-9Z0glfvy2bIIUasryPCO-Ts';
+    const VAPID_PUBLIC = 'BJEmsWE_FibK2mOrLL9MeQ6zft50uGogdoIasnzLNSxzr7JVQM-IdlIBECe8huEMy84rfq_5RToNMAF7LUosq0s';
+    const SPRINT_START = '2026-03-29';
+    const YC_DEADLINE = '2026-05-04';
+    const PIN = '9642';
+    const PTS_SCHED = 5;
+    const PTS_TASK = 10;
+    const AFFIRMATIONS = [
+      "I am building something that will change how coaches develop athletes. God has placed this vision in me for a reason.",
+      "I am disciplined, focused, and relentless. I do not waste time \u2014 every hour moves me closer to my goal.",
+      "I am not behind. I am exactly where God needs me to be, and I will steward this season with excellence.",
+      "I ship fast, talk to users, and iterate. Perfection is the enemy \u2014 progress is the standard.",
+      "My body is my instrument. I train it, fuel it, and rest it so I can perform at my best.",
+      "I am a founder. I solve problems, build products, and create value. This is who I am becoming.",
+      "I trust God\u2019s timing. I work as if it depends on me and pray as if it depends on Him.",
+      "Today I will do one thing that scares me \u2014 one conversation, one cold email, one bold ask.",
+      "I am grateful for Berkeley, for this opportunity, for my family, and for the strength to pursue this dream.",
+      "36 days. No time to be perfect. Time to be real. Let\u2019s go."
+    ];
 
-      // Clear cache when user leaves / closes the app
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden' && navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage('CLEAR_CACHE');
-        }
-      });
-      window.addEventListener('pagehide', () => {
-        if (navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage('CLEAR_CACHE');
-        }
-      });
-
-      // When app becomes visible again, fetch fresh data
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') {
-          init();
-          if (navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.postMessage('FORCE_UPDATE');
-          }
-        }
-      });
+    // Supabase helpers
+    function supa(path, opts = {}) {
+      return fetch(`${SUPA_URL}/rest/v1/${path}`, {
+        ...opts,
+        headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', 'Prefer': opts.prefer || 'return=representation', ...(opts.headers || {}) }
+      }).then(r => r.ok ? r.json() : []).catch(() => []);
     }
+    const supaGet = (t, q = '') => supa(`${t}?${q}`);
+    const supaPost = (t, d) => supa(t, { method: 'POST', body: JSON.stringify(d) });
+    const supaPatch = (t, q, d) => supa(`${t}?${q}`, { method: 'PATCH', body: JSON.stringify(d) });
 
-    // --- Helpers ---
     const $ = (s, p = document) => p.querySelector(s);
     const $$ = (s, p = document) => [...p.querySelectorAll(s)];
-    const catColor = (c) => ({ career: '#22c55e', faith: '#a78bfa', fitness: '#f59e0b', personal: '#64748b' }[c] || '#64748b');
+    function daysBetween(a, b) { return Math.floor((new Date(b+'T00:00:00') - new Date(a+'T00:00:00')) / 86400000); }
+    function todayStr() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 
-    function lsKey(prefix, date, idx) { return `cmd_${prefix}_${date}_${idx}`; }
-    function lsGet(key) { try { return localStorage.getItem(key); } catch { return null; } }
-    function lsSet(key, val) { try { localStorage.setItem(key, val); } catch {} }
+    let currentDate = todayStr();
+    let totalPoints = 0;
+    let notifTimers = [];
+    let calYear, calMonth;
 
-    function daysBetween(a, b) {
-      const d1 = new Date(a + 'T00:00:00');
-      const d2 = new Date(b + 'T00:00:00');
-      return Math.floor((d2 - d1) / 86400000);
+    // Points
+    async function loadPoints() {
+      const rows = await supaGet('ageg_points', 'select=points');
+      totalPoints = rows.reduce((s, r) => s + (r.points||0), 0);
+      $('#pointsBadge').textContent = `${totalPoints} pts`;
     }
+    async function addPoints(source, pts, date) {
+      await supaPost('ageg_points', { date, source, points: pts });
+      totalPoints += pts;
+      $('#pointsBadge').textContent = `${totalPoints} pts`;
+    }
+
+    // Status cycling: click=done, double=slacked, triple=postponed
+    const STATUS_CYCLE = ['not_started', 'done', 'slacked', 'postponed'];
+    const STATUS_ICONS = { not_started: '', done: '\u2705', slacked: '\uD83D\uDE34', postponed: '\u23F3' };
+    function cycleStatus(cur) { const i = STATUS_CYCLE.indexOf(cur); return STATUS_CYCLE[(i+1) % STATUS_CYCLE.length]; }
+
+    function createClickHandler(cb) {
+      let clicks = 0, timer = null;
+      return function() {
+        clicks++;
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => { cb(clicks); clicks = 0; }, 350);
+      };
+    }
+
+    // Notifications
+    async function setupNotifications() {
+      if (!('Notification' in window)) return;
+      if (Notification.permission === 'default') await Notification.requestPermission();
+    }
+
+    function scheduleNotifications(schedule, date) {
+      notifTimers.forEach(t => clearTimeout(t));
+      notifTimers = [];
+      if (Notification.permission !== 'granted') return;
+      const now = new Date();
+      schedule.forEach(item => {
+        const t = item.time_slot.split('-')[0].trim();
+        const [h, m] = t.split(':').map(Number);
+        if (isNaN(h)) return;
+        const ev = new Date(`${date}T${String(h).padStart(2,'0')}:${String(m||0).padStart(2,'0')}:00`);
+        const delay = ev.getTime() - 5*60*1000 - now.getTime();
+        if (delay > 0 && delay < 86400000) {
+          notifTimers.push(setTimeout(() => {
+            new Notification('AGEG Hub', { body: `In 5 min: ${item.activity}`, icon: 'icon-192.png', tag: `sched-${item.id}` });
+          }, delay));
+        }
+      });
+    }
+
+    function startCountdownBanner(schedule, date) {
+      const banner = $('#countdownBanner'), text = $('#countdownText'), timer = $('#countdownTimer');
+      function update() {
+        const now = new Date(); let next = null, nextT = Infinity;
+        schedule.forEach(item => {
+          if (item.status !== 'not_started') return;
+          const t = item.time_slot.split('-')[0].trim();
+          const [h, m] = t.split(':').map(Number);
+          if (isNaN(h)) return;
+          const ev = new Date(`${date}T${String(h).padStart(2,'0')}:${String(m||0).padStart(2,'0')}:00`);
+          const diff = ev.getTime() - now.getTime();
+          if (diff > 0 && diff < 600000 && diff < nextT) { nextT = diff; next = item; }
+        });
+        if (next) {
+          const mins = Math.floor(nextT/60000), secs = Math.floor((nextT%60000)/1000);
+          text.textContent = `Up next: ${next.activity}`;
+          timer.textContent = `${mins}:${String(secs).padStart(2,'0')}`;
+          banner.classList.add('show');
+        } else { banner.classList.remove('show'); }
+      }
+      update(); setInterval(update, 1000);
+    }
+
+    // Push subscription
+    async function subscribePush() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        let sub = await reg.pushManager.getSubscription();
+        if (!sub) {
+          const b64 = VAPID_PUBLIC, pad = '='.repeat((4 - b64.length % 4) % 4);
+          const raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+          const key = new Uint8Array(raw.length); for (let i = 0; i < raw.length; i++) key[i] = raw.charCodeAt(i);
+          sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
+        }
+        const j = sub.toJSON();
+        await supaPost('ageg_push_subscriptions', { endpoint: j.endpoint, keys: j.keys }).catch(() => {});
+      } catch (e) { console.log('Push sub failed:', e); }
+    }
+
+    // Calendar
+    function initCal() { const d = new Date(); calYear = d.getFullYear(); calMonth = d.getMonth(); }
+
+    function renderCalendar(datesWithData) {
+      const first = new Date(calYear, calMonth, 1), startDay = first.getDay();
+      const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+      const today = todayStr(), dataSet = new Set(datesWithData);
+      const monthName = first.toLocaleString('default', { month: 'short', year: 'numeric' });
+      let h = `<div class="card" style="padding:0.75rem;">
+        <div class="cal-wrapper">
+        <div class="cal-nav"><button class="cal-nav-btn" onclick="chgMonth(-1)">\u25C0</button><span class="cal-month">${monthName}</span><button class="cal-nav-btn" onclick="chgMonth(1)">\u25B6</button></div>
+        <div class="cal-grid">`;
+      ['S','M','T','W','T','F','S'].forEach(d => h += `<div class="cal-header">${d}</div>`);
+      for (let i = 0; i < startDay; i++) h += `<div class="cal-day empty"></div>`;
+      for (let d = 1; d <= daysInMonth; d++) {
+        const ds = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const has = dataSet.has(ds), isT = ds === today, isS = ds === currentDate;
+        const cls = [has?'has-data':'', isT?'today':'', isS?'selected':''].join(' ');
+        const oc = has ? `onclick="selDate('${ds}')"` : '';
+        h += `<div class="cal-day ${cls}" ${oc}>${d}</div>`;
+      }
+      h += `</div></div></div>`;
+      return h;
+    }
+
+    async function chgMonth(d) { calMonth += d; if (calMonth<0){calMonth=11;calYear--;} if (calMonth>11){calMonth=0;calYear++;} await init(); }
+    async function selDate(d) { currentDate = d; await init(); }
 
     function progressRing(pct, color, label, display) {
-      const r = 34, c = 2 * Math.PI * r;
-      const offset = c - (Math.min(pct, 100) / 100) * c;
-      return `<div class="card ring-card">
-        <svg class="ring-svg" viewBox="0 0 80 80">
-          <circle class="ring-bg" cx="40" cy="40" r="${r}"/>
-          <circle class="ring-fg" cx="40" cy="40" r="${r}" stroke="${color}"
-            stroke-dasharray="${c}" stroke-dashoffset="${offset}"/>
-          <text class="ring-value" x="40" y="44" text-anchor="middle">${display}</text>
-        </svg>
-        <div class="ring-label">${label}</div>
-      </div>`;
+      const r=34, c=2*Math.PI*r, off=c-(Math.min(pct,100)/100)*c;
+      return `<div class="card ring-card"><svg class="ring-svg" viewBox="0 0 80 80"><circle class="ring-bg" cx="40" cy="40" r="${r}"/><circle class="ring-fg" cx="40" cy="40" r="${r}" stroke="${color}" stroke-dasharray="${c}" stroke-dashoffset="${off}"/><text class="ring-value" x="40" y="44" text-anchor="middle">${display}</text></svg><div class="ring-label">${label}</div></div>`;
     }
 
-    // --- Render ---
+    // Main render
     async function init() {
-      let data;
-      try {
-        const res = await fetch(`data.json?t=${Date.now()}`);
-        data = await res.json();
-      } catch {
-        $('#app').innerHTML = '<p style="color:var(--error);text-align:center;padding:3rem;">Failed to load data.json</p>';
-        return;
-      }
+      if (!calYear) initCal();
+      const [config, schedule, tasks, allDates, recentConfigs] = await Promise.all([
+        supaGet('ageg_daily_config', `date=eq.${currentDate}`),
+        supaGet('ageg_schedule', `date=eq.${currentDate}&order=created_at.asc`),
+        supaGet('ageg_tasks', `date=eq.${currentDate}&order=created_at.asc`),
+        supaGet('ageg_daily_config', 'select=date&order=date.asc'),
+        supaGet('ageg_daily_config', 'select=date,sprint_day,day_name,daily_log,daily_scripture&order=date.desc&limit=7')
+      ]);
+      await loadPoints();
 
-      const d = data;
-      const today = d.current_day.date;
-      const sprintDay = daysBetween(d.sprint_start_date, today) + 1;
-      const ycDays = daysBetween(today, d.yc_deadline);
+      const d = config[0];
+      const today = todayStr();
+      const sprintDay = d ? d.sprint_day : daysBetween(SPRINT_START, currentDate) + 1;
+      const ycDays = daysBetween(today, YC_DEADLINE);
+      const isToday = currentDate === today;
 
-      // Header
       $('#headerMeta').innerHTML = `
         <span class="pill pill-sprint">36-DAY SPRINT</span>
         <span class="pill pill-day">Day ${sprintDay}/36</span>
         <span class="pill pill-deadline">YC: ${ycDays}d</span>
-        <span class="pill pill-day">${d.current_day.day_name}</span>
-      `;
+        <span class="pill pill-day">${d ? d.day_name : new Date(currentDate+'T12:00:00').toLocaleDateString('en-US',{weekday:'short'})}</span>`;
 
-      // Affirmation
-      const affIdx = (sprintDay - 1) % d.affirmations.length;
-      const affirmation = d.affirmations[affIdx];
+      // Calendar + Affirmation side by side
+      const calHtml = renderCalendar(allDates.map(r => r.date));
+      let affHtml = '';
+      if (d) {
+        const affIdx = (sprintDay-1) % AFFIRMATIONS.length;
+        const sc = d.daily_scripture;
+        affHtml = `<div class="aff-side"><div class="affirmation-card">
+          <div class="affirmation-text">\u201C${AFFIRMATIONS[affIdx]}\u201D</div>
+          <div class="affirmation-ref">Day ${sprintDay} Affirmation</div>
+          ${sc ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(167,139,250,0.12);"><div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;font-style:italic;">\u201C${sc.verse}\u201D</div><div style="font-size:0.7rem;color:var(--faith);font-weight:600;margin-top:0.3rem;">${sc.reference}</div></div>` : ''}
+        </div></div>`;
+      }
+      let html = `<section class="section"><div class="cal-aff-row"><div class="cal-side">${calHtml}</div>${affHtml}</div></section>`;
+
+      if (!d && !tasks.length && !schedule.length) {
+        html += `<section class="section"><div class="card" style="text-align:center;padding:2rem;color:var(--text-dim);">No data for ${currentDate}. Tap + to add tasks.</div></section>`;
+        $('#app').innerHTML = html; return;
+      }
 
       // Progress
-      const p = d.progress;
-      const sprintPct = Math.round((sprintDay / 36) * 100);
-
-      let html = '';
-
-      // 1. Affirmation + Scripture
-      const scripture = d.daily_scripture;
-      html += `<section class="section">
-        <div class="affirmation-card">
-          <div class="affirmation-text">\u201C${affirmation}\u201D</div>
-          <div class="affirmation-ref">Day ${sprintDay} Affirmation</div>
-          ${scripture ? `<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(167,139,250,0.12);">
-            <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;font-style:italic;">\u201C${scripture.verse}\u201D</div>
-            <div style="font-size:0.7rem;color:var(--faith);font-weight:600;margin-top:0.3rem;">${scripture.reference}</div>
-          </div>` : ''}
-        </div>
-      </section>`;
-
-      // 2. Progress rings
-      html += `<section class="section">
-        <div class="section-label">Sprint Progress</div>
-        <div class="progress-grid">
-          ${progressRing(sprintPct, '#3b82f6', 'Sprint', `${sprintPct}%`)}
-          ${progressRing((p.gym_this_week / p.gym_week_target) * 100, '#f59e0b', 'Gym / Week', `${p.gym_this_week}/${p.gym_week_target}`)}
-          ${progressRing((p.isaiah_completed / p.isaiah_total) * 100, '#a78bfa', 'Isaiah', `${p.isaiah_completed}/${p.isaiah_total}`)}
-          ${progressRing((p.videos_analyzed / p.videos_target) * 100, '#22c55e', 'Videos', `${p.videos_analyzed}/${p.videos_target}`)}
-        </div>
-      </section>`;
-
-      // 3. Goal cards
-      html += `<section class="section">
-        <div class="section-label">Today\u2019s Goals</div>
-        <div class="goals-grid">`;
-      for (const [cat, goals] of Object.entries(d.goals)) {
-        const isMobile = window.innerWidth < 1024;
-        html += `<div class="card goal-card" data-cat="${cat}">
-          <div class="goal-cat" data-cat="${cat}">${cat}</div>
-          <div class="goal-daily">${goals.daily}</div>
-          <div class="goal-cascade ${isMobile ? 'collapsed' : ''}" id="cascade-${cat}">
-            <div class="goal-cascade-item"><strong>Quarterly</strong><br>${goals.quarterly}</div>
-            <div class="goal-cascade-item"><strong>Monthly</strong><br>${goals.monthly}</div>
-            <div class="goal-cascade-item"><strong>Weekly</strong><br>${goals.weekly}</div>
-          </div>
-          <button class="goal-toggle" onclick="toggleCascade('${cat}')">${isMobile ? 'Show goals cascade \u25BE' : 'Hide cascade \u25B4'}</button>
-        </div>`;
-      }
-      html += `</div></section>`;
-
-      // 4. Schedule
-      html += `<section class="section">
-        <div class="section-label">Today\u2019s Schedule</div>
-        <div class="card" style="padding:0.25rem 0;">`;
-      d.schedule.forEach((s, i) => {
-        const key = lsKey('sched', today, i);
-        const isDone = lsGet(key) === 'done';
-        html += `<div class="schedule-item ${isDone ? 'done' : ''}" data-sched-idx="${i}" onclick="toggleSchedule(this, ${i}, '${today}')">
-          <span class="schedule-time">${s.time}</span>
-          <span class="schedule-activity">${s.activity}</span>
-          <span class="cat-pill" data-cat="${s.category}">${s.category}</span>
-          <span class="schedule-check">\u2713</span>
-        </div>`;
-      });
-      html += `</div></section>`;
-
-      // 5. Tasks
-      const taskStates = d.tasks.map((t, i) => {
-        const key = lsKey('tasks', today, i);
-        const stored = lsGet(key);
-        return stored || t.status;
-      });
-      const doneCount = taskStates.filter(s => s === 'done').length;
-      const totalTasks = d.tasks.length;
-      const counterColor = doneCount === 0 ? 'var(--error)' : doneCount === totalTasks ? 'var(--success)' : 'var(--warning)';
-      const counterBg = doneCount === 0 ? 'rgba(239,68,68,0.1)' : doneCount === totalTasks ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)';
-
-      html += `<section class="section">
-        <div class="section-label">
-          <div class="task-header">
-            <span>Today\u2019s Tasks</span>
-            <span class="task-counter" id="taskCounter" style="color:${counterColor};background:${counterBg}">${doneCount}/${totalTasks} Done</span>
-          </div>
-        </div>
-        <div class="card" style="padding:0.25rem 0;" id="taskList">`;
-
-      const indices = d.tasks.map((_, i) => i);
-      indices.sort((a, b) => {
-        const aD = taskStates[a] === 'done' ? 1 : 0;
-        const bD = taskStates[b] === 'done' ? 1 : 0;
-        return aD - bD;
-      });
-
-      indices.forEach(i => {
-        const t = d.tasks[i];
-        const isDone = taskStates[i] === 'done';
-        html += `<div class="task-item ${isDone ? 'done' : ''}" data-task-idx="${i}" onclick="toggleTask(this, ${i}, '${today}')">
-          <div class="task-checkbox">${isDone ? '\u2713' : ''}</div>
-          <span class="task-name">${t.name}</span>
-          <div class="task-meta">
-            <span class="cat-pill" data-cat="${t.category}">${t.category}</span>
-            <span class="priority-dot ${t.priority}"></span>
-          </div>
-        </div>`;
-      });
-      html += `</div></section>`;
-
-      // 6. Milestones
-      html += `<section class="section">
-        <div class="section-label">Sprint Milestones</div>
-        <div class="card" style="padding:0.5rem;">`;
-      d.milestones.forEach(m => {
-        html += `<div class="milestone-item ${m.status}">
-          <div class="milestone-week">W${m.week}</div>
-          <div class="milestone-body">
-            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-              <span class="milestone-theme">${m.theme}</span>
-              <span class="status-badge ${m.status}">${m.status}</span>
-            </div>
-            <div class="milestone-dates">${m.dates}</div>
-            <div class="milestone-kpis">${m.kpis}</div>
-          </div>
-        </div>`;
-      });
-      html += `</div></section>`;
-
-      // 7. Isaiah
-      const completed = new Set(d.isaiah_chapters.completed);
-      const todayCh = d.isaiah_chapters.today;
-      html += `<section class="section">
-        <div class="section-label">Isaiah Reading Progress</div>
-        <div class="card">
-          <div class="isaiah-grid">`;
-      for (let ch = 1; ch <= 66; ch++) {
-        const cls = completed.has(ch) ? 'completed' : ch === todayCh ? 'today' : '';
-        html += `<div class="isaiah-ch ${cls}">${ch}</div>`;
-      }
-      html += `</div></div></section>`;
-
-      // 8. Gym split
-      html += `<section class="section">
-        <div class="section-label">Gym Split</div>
-        <div class="card">
-          <div class="gym-grid">`;
-      d.gym_week.forEach(g => {
-        const cls = [g.is_today ? 'today' : '', g.is_rest ? 'rest' : ''].join(' ');
-        html += `<div class="gym-day ${cls}">
-          <div class="gym-day-label">${g.day}</div>
-          <div class="gym-day-split" style="color:${g.is_rest ? 'var(--warning)' : 'var(--text)'}">${g.split}</div>
-        </div>`;
-      });
-      html += `</div></div></section>`;
-
-      // 9. Daily Log
-      const allLogs = [...d.daily_log].reverse();
-      const visibleLogs = allLogs.slice(0, 7);
-      const hasMore = allLogs.length > 7;
-      html += `<section class="section">
-        <div class="section-label">Daily Log</div>
-        <div class="card" style="padding:0.5rem;" id="logContainer">`;
-      visibleLogs.forEach(l => {
-        html += `<div class="log-entry">
-          <div class="log-date">Day ${l.sprint_day} \u2014 ${l.day_name}, ${l.date}</div>
-          <div class="log-summary">${l.summary}</div>
-          <div class="log-meta">${l.bible} \u00B7 ${l.tasks_completed.length} tasks done${l.notes ? ' \u00B7 ' + l.notes : ''}</div>
-        </div>`;
-      });
-      if (hasMore) {
-        html += `<button class="show-more-btn" onclick="showAllLogs()">Show ${allLogs.length - 7} more entries</button>`;
-      }
-      html += `</div></section>`;
-
-      // Store extra logs for show more
-      if (hasMore) {
-        window._extraLogs = allLogs.slice(7);
+      if (d && d.progress) {
+        const p = d.progress, spPct = Math.round((sprintDay/36)*100);
+        html += `<section class="section"><div class="section-label">Sprint Progress</div><div class="progress-grid">
+          ${progressRing(spPct,'#3b82f6','Sprint',`${spPct}%`)}
+          ${progressRing(((p.gym_this_week||0)/(p.gym_week_target||6))*100,'#f59e0b','Gym/Week',`${p.gym_this_week||0}/${p.gym_week_target||6}`)}
+          ${progressRing(((p.isaiah_completed||0)/(p.isaiah_total||66))*100,'#a78bfa','Isaiah',`${p.isaiah_completed||0}/${p.isaiah_total||66}`)}
+          ${progressRing(((p.videos_analyzed||0)/(p.videos_target||50))*100,'#22c55e','Videos',`${p.videos_analyzed||0}/${p.videos_target||50}`)}
+        </div></section>`;
       }
 
-      // Footer
-      const updatedDate = new Date(d.last_updated);
-      html += `<footer class="footer">
-        <span class="footer-brand">AGEG HUB</span><br>
-        Last updated: ${updatedDate.toLocaleString()}
-      </footer>`;
+      // Goals
+      if (d && d.goals) {
+        html += `<section class="section"><div class="section-label">Today\u2019s Goals</div><div class="goals-grid">`;
+        for (const [cat, g] of Object.entries(d.goals)) {
+          const mob = window.innerWidth < 1024;
+          html += `<div class="card goal-card" data-cat="${cat}"><div class="goal-cat" data-cat="${cat}">${cat}</div><div class="goal-daily">${g.daily}</div>
+            <div class="goal-cascade ${mob?'collapsed':''}" id="cascade-${cat}">
+              <div class="goal-cascade-item"><strong>Quarterly</strong><br>${g.quarterly}</div>
+              <div class="goal-cascade-item"><strong>Monthly</strong><br>${g.monthly}</div>
+              <div class="goal-cascade-item"><strong>Weekly</strong><br>${g.weekly}</div>
+            </div><button class="goal-toggle" onclick="toggleCascade('${cat}')">${mob?'Show goals cascade \u25BE':'Hide cascade \u25B4'}</button></div>`;
+        }
+        html += `</div></section>`;
+      }
 
+      // Schedule
+      if (schedule.length) {
+        html += `<section class="section"><div class="section-label">Schedule</div><div class="card" style="padding:0.25rem 0;">`;
+        schedule.forEach(s => {
+          const icon = STATUS_ICONS[s.status] || '';
+          html += `<div class="schedule-item ${s.status!=='not_started'?s.status:''}" id="sched-${s.id}">
+            <span class="schedule-time">${s.time_slot}</span><span class="schedule-activity">${s.activity}</span>
+            <span class="cat-pill" data-cat="${s.category}">${s.category}</span><span class="schedule-status">${icon}</span></div>`;
+        });
+        html += `<div class="status-legend"><span>\u2705 Done (1x click)</span><span>\uD83D\uDE34 Slacked (2x)</span><span>\u23F3 Postponed (3x)</span></div></div></section>`;
+      }
+
+      // Tasks
+      if (tasks.length) {
+        const dc = tasks.filter(t=>t.status==='done').length;
+        const cc = dc===0?'var(--error)':dc===tasks.length?'var(--success)':'var(--warning)';
+        const cb = dc===0?'rgba(239,68,68,0.1)':dc===tasks.length?'rgba(34,197,94,0.1)':'rgba(245,158,11,0.1)';
+        const sorted = [...tasks].sort((a,b)=>(a.status==='done'?1:0)-(b.status==='done'?1:0));
+        html += `<section class="section"><div class="section-label"><div class="task-header"><span>Tasks</span>
+          <span class="task-counter" id="taskCounter" style="color:${cc};background:${cb}">${dc}/${tasks.length} Done</span></div></div>
+          <div class="card" style="padding:0.25rem 0;" id="taskList">`;
+        sorted.forEach(t => {
+          const icon = STATUS_ICONS[t.status]||'';
+          html += `<div class="task-item ${t.status!=='not_started'?t.status:''}" id="task-${t.id}">
+            <div class="task-checkbox">${icon}</div><span class="task-name">${t.name}</span>
+            <div class="task-meta"><span class="cat-pill" data-cat="${t.category}">${t.category}</span><span class="priority-dot ${t.priority}"></span></div></div>`;
+        });
+        html += `<div class="status-legend"><span>\u2705 Done (+${PTS_TASK}pts)</span><span>\uD83D\uDE34 Slacked</span><span>\u23F3 Postponed</span></div></div></section>`;
+      }
+
+      // Milestones
+      if (d && d.milestones) {
+        html += `<section class="section"><div class="section-label">Sprint Milestones</div><div class="card" style="padding:0.5rem;">`;
+        d.milestones.forEach(m => {
+          html += `<div class="milestone-item ${m.status}"><div class="milestone-week">W${m.week}</div><div class="milestone-body">
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;"><span class="milestone-theme">${m.theme}</span><span class="status-badge ${m.status}">${m.status}</span></div>
+            <div class="milestone-dates">${m.dates}</div><div class="milestone-kpis">${m.kpis}</div></div></div>`;
+        });
+        html += `</div></section>`;
+      }
+
+      // Isaiah
+      if (d && d.isaiah_chapters) {
+        const comp = new Set(d.isaiah_chapters.completed||[]), todayCh = d.isaiah_chapters.today;
+        html += `<section class="section"><div class="section-label">Isaiah Reading</div><div class="card"><div class="isaiah-grid">`;
+        for (let ch=1; ch<=66; ch++) { const cls = comp.has(ch)?'completed':ch===todayCh?'today':''; html += `<div class="isaiah-ch ${cls}">${ch}</div>`; }
+        html += `</div></div></section>`;
+      }
+
+      // Gym
+      if (d && d.gym_week) {
+        html += `<section class="section"><div class="section-label">Gym Split</div><div class="card"><div class="gym-grid">`;
+        d.gym_week.forEach(g => {
+          const cls = [g.is_today?'today':'', g.is_rest?'rest':''].join(' ');
+          html += `<div class="gym-day ${cls}"><div class="gym-day-label">${g.day}</div><div class="gym-day-split" style="color:${g.is_rest?'var(--warning)':'var(--text)'}">${g.split}</div></div>`;
+        });
+        html += `</div></div></section>`;
+      }
+
+      // Daily Log
+      const logsWithData = recentConfigs.filter(r => r.daily_log);
+      if (logsWithData.length) {
+        html += `<section class="section"><div class="section-label">Daily Log</div><div class="card" style="padding:0.75rem;">`;
+        logsWithData.forEach(r => {
+          const log = r.daily_log;
+          html += `<div class="log-entry">
+            <div class="log-date">${r.date} \u2014 Day ${r.sprint_day || '?'} (${r.day_name || ''})</div>
+            ${log.summary ? `<div class="log-summary">${log.summary}</div>` : ''}
+            <div class="log-meta">${log.bible_chapter ? `\uD83D\uDCD6 ${log.bible_chapter}` : ''}${log.tasks_completed != null ? ` \u00B7 \u2705 ${log.tasks_completed} tasks done` : ''}${log.highlight ? ` \u00B7 \u2B50 ${log.highlight}` : ''}</div>
+          </div>`;
+        });
+        html += `</div></section>`;
+      }
+
+      html += `<footer class="footer"><span class="footer-brand">AGEG HUB</span><br>Supabase-powered \u00B7 ${currentDate}</footer>`;
       $('#app').innerHTML = html;
-    }
 
-    // --- Interactive handlers ---
-    function toggleTask(el, idx, date) {
-      const key = lsKey('tasks', date, idx);
-      const isDone = el.classList.contains('done');
-      const newState = isDone ? 'not_started' : 'done';
-      lsSet(key, newState);
-
-      el.classList.toggle('done');
-      const cb = el.querySelector('.task-checkbox');
-      cb.textContent = isDone ? '' : '\u2713';
-      cb.classList.add('bounce');
-      setTimeout(() => cb.classList.remove('bounce'), 250);
-
-      // Update counter
-      const allItems = $$('.task-item');
-      const done = allItems.filter(i => i.classList.contains('done')).length;
-      const total = allItems.length;
-      const counter = $('#taskCounter');
-      if (counter) {
-        counter.textContent = `${done}/${total} Done`;
-        const c = done === 0 ? 'var(--error)' : done === total ? 'var(--success)' : 'var(--warning)';
-        const bg = done === 0 ? 'rgba(239,68,68,0.1)' : done === total ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)';
-        counter.style.color = c;
-        counter.style.background = bg;
-      }
-    }
-
-    function toggleSchedule(el, idx, date) {
-      const key = lsKey('sched', date, idx);
-      const isDone = el.classList.contains('done');
-      lsSet(key, isDone ? 'not_started' : 'done');
-      el.classList.toggle('done');
-    }
-
-    function toggleCascade(cat) {
-      const el = document.getElementById(`cascade-${cat}`);
-      const btn = el.nextElementSibling;
-      el.classList.toggle('collapsed');
-      btn.textContent = el.classList.contains('collapsed') ? 'Show goals cascade \u25BE' : 'Hide cascade \u25B4';
-    }
-
-    function showAllLogs() {
-      if (!window._extraLogs) return;
-      const container = $('#logContainer');
-      const btn = container.querySelector('.show-more-btn');
-      if (btn) btn.remove();
-      window._extraLogs.forEach(l => {
-        const div = document.createElement('div');
-        div.className = 'log-entry';
-        div.innerHTML = `
-          <div class="log-date">Day ${l.sprint_day} \u2014 ${l.day_name}, ${l.date}</div>
-          <div class="log-summary">${l.summary}</div>
-          <div class="log-meta">${l.bible} \u00B7 ${l.tasks_completed.length} tasks done${l.notes ? ' \u00B7 ' + l.notes : ''}</div>
-        `;
-        container.appendChild(div);
+      // Attach click handlers
+      schedule.forEach(s => {
+        const el = $(`#sched-${s.id}`);
+        if (!el) return;
+        let cur = s.status;
+        el.addEventListener('click', createClickHandler(async (clicks) => {
+          let ns = cur; for (let i=0; i<clicks; i++) ns = cycleStatus(ns);
+          const was = cur; cur = ns;
+          el.className = `schedule-item ${ns!=='not_started'?ns:''}`;
+          el.querySelector('.schedule-status').textContent = STATUS_ICONS[ns]||'';
+          await supaPatch('ageg_schedule', `id=eq.${s.id}`, { status: ns });
+          if (ns==='done' && was==='not_started') await addPoints(`sched:${s.activity}`, PTS_SCHED, currentDate);
+        }));
       });
-      delete window._extraLogs;
+
+      tasks.forEach(t => {
+        const el = $(`#task-${t.id}`);
+        if (!el) return;
+        let cur = t.status;
+        el.addEventListener('click', createClickHandler(async (clicks) => {
+          let ns = cur; for (let i=0; i<clicks; i++) ns = cycleStatus(ns);
+          const was = cur; cur = ns;
+          el.className = `task-item ${ns!=='not_started'?ns:''}`;
+          const cb = el.querySelector('.task-checkbox');
+          cb.textContent = STATUS_ICONS[ns]||''; cb.classList.add('bounce');
+          setTimeout(() => cb.classList.remove('bounce'), 250);
+          await supaPatch('ageg_tasks', `id=eq.${t.id}`, { status: ns });
+          if (ns==='done' && was==='not_started') await addPoints(`task:${t.name}`, PTS_TASK, currentDate);
+          // Update counter
+          const all = $$('.task-item'), done = all.filter(i=>i.classList.contains('done')).length, tot = all.length;
+          const ctr = $('#taskCounter');
+          if (ctr) {
+            ctr.textContent = `${done}/${tot} Done`;
+            ctr.style.color = done===0?'var(--error)':done===tot?'var(--success)':'var(--warning)';
+            ctr.style.background = done===0?'rgba(239,68,68,0.1)':done===tot?'rgba(34,197,94,0.1)':'rgba(245,158,11,0.1)';
+          }
+        }));
+      });
+
+      if (isToday) { setupNotifications(); scheduleNotifications(schedule, currentDate); startCountdownBanner(schedule, currentDate); subscribePush(); }
     }
 
-    // --- Boot ---
+    // Modals
+    function showPinModal() { $('#pinModal').classList.add('show'); $('#pinInput').value=''; $('#pinError').style.display='none'; setTimeout(()=>$('#pinInput').focus(),100); }
+    function verifyPin() {
+      if ($('#pinInput').value===PIN) { $('#pinModal').classList.remove('show'); $('#taskModal').classList.add('show'); $('#newTaskDate').value=currentDate; }
+      else { $('#pinError').style.display='block'; $('#pinInput').value=''; $('#pinInput').focus(); }
+    }
+    function closeModals() { $('#pinModal').classList.remove('show'); $('#taskModal').classList.remove('show'); }
+
+    async function addNewTask() {
+      const name=$('#newTaskName').value.trim(), date=$('#newTaskDate').value, cat=$('#newTaskCat').value, pri=$('#newTaskPriority').value, time=$('#newTaskTime').value.trim();
+      if (!name||!date) return;
+      await supaPost('ageg_tasks', { date, name, category: cat, priority: pri });
+      if (time) await supaPost('ageg_schedule', { date, time_slot: time, activity: name, category: cat });
+      const existing = await supaGet('ageg_daily_config', `date=eq.${date}`);
+      if (!existing.length) {
+        const sd = daysBetween(SPRINT_START, date)+1;
+        const dn = new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'long'});
+        await supaPost('ageg_daily_config', { date, day_name: dn, sprint_day: sd });
+      }
+      closeModals(); $('#newTaskName').value=''; $('#newTaskTime').value=''; await init();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key==='Enter' && $('#pinModal').classList.contains('show')) verifyPin(); });
+    function toggleCascade(cat) { const el=document.getElementById(`cascade-${cat}`), btn=el.nextElementSibling; el.classList.toggle('collapsed'); btn.textContent=el.classList.contains('collapsed')?'Show goals cascade \u25BE':'Hide cascade \u25B4'; }
+
+    // Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        reg.update();
+        reg.addEventListener('updatefound', () => { const nw=reg.installing; nw.addEventListener('statechange', ()=>{ if(nw.state==='activated') location.reload(); }); });
+      }).catch(()=>{});
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState==='hidden' && navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage('CLEAR_CACHE');
+        if (document.visibilityState==='visible') { init(); if(navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage('FORCE_UPDATE'); }
+      });
+      window.addEventListener('pagehide', () => { if(navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage('CLEAR_CACHE'); });
+    }
+
     init();
   </script>
 </body>
