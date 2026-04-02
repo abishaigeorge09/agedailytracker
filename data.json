@@ -22,83 +22,85 @@
     },
     "faith": {
       "quarterly": "Complete Isaiah with deep understanding. Build consistent 1-hour daily devotional habit.",
-      "monthly": "Read scripture daily. Build devotional streak - no zero days. Journal 3+ reflections per week.",
+      "monthly": "Read Isaiah daily. Build devotional streak — no zero days. Journal 3+ reflections per week.",
       "weekly": "Read Isaiah + Proverbs. No zero days. Journal reflections.",
       "daily": "Proverbs 2 read at 4 AM. 30-min reflection at 2 PM. CRU meeting + worship tonight. Sleep 10 PM sharp."
     },
     "fitness": {
       "quarterly": "Gym 6x/week consistently (PPL x2). Balanced diet on a budget. Play sports 2x/week.",
       "monthly": "Hit gym 24+ times. Establish PPL routine. Track meals. Play tennis or basketball 2x/week.",
-      "weekly": "Gym 6 sessions Mon-Wed, Fri-Sun. PPL split locked. Track meals daily.",
-      "daily": "REST day. Fasting today - water only. Sleep by 10 PM sharp."
+      "weekly": "Stick to PPL split. No missed sessions without valid reason. Eat balanced meals.",
+      "daily": "REST day (Thursday). Stay hydrated. Fast today — water only."
     }
   },
   "progress": {
     "sprint_percent": 12,
     "gym_this_week": 0,
-    "gym_week_target": 6,
-    "isaiah_completed": 3,
-    "isaiah_total": 66,
+    "isaiah_completed": 4,
     "videos_analyzed": 0,
     "videos_target": 50
   },
   "isaiah_chapters": {
-    "completed": [1, 2, 3],
+    "completed": [1, 2, 3, 4],
     "today": "Proverbs 2"
   },
   "gym_week": [
-    {"day": "Mon", "split": "Push", "is_today": false, "is_rest": false},
-    {"day": "Tue", "split": "Pull", "is_today": false, "is_rest": false},
-    {"day": "Wed", "split": "Legs", "is_today": false, "is_rest": false},
-    {"day": "Thu", "split": "REST", "is_today": true, "is_rest": true},
-    {"day": "Fri", "split": "Push", "is_today": false, "is_rest": false},
-    {"day": "Sat", "split": "Pull", "is_today": false, "is_rest": false},
-    {"day": "Sun", "split": "Legs", "is_today": false, "is_rest": false}
+    { "day": "Mon", "split": "Push", "status": "missed", "is_today": false },
+    { "day": "Tue", "split": "Pull", "status": "missed", "is_today": false },
+    { "day": "Wed", "split": "Legs", "status": "missed", "is_today": false },
+    { "day": "Thu", "split": "REST", "status": "rest", "is_today": true },
+    { "day": "Fri", "split": "Push", "status": "upcoming", "is_today": false },
+    { "day": "Sat", "split": "Pull", "status": "upcoming", "is_today": false },
+    { "day": "Sun", "split": "Legs", "status": "upcoming", "is_today": false }
   ],
   "schedule": [
-    {"time": "4:00-4:30", "activity": "Proverbs 2 - scripture reading (DONE)", "category": "faith"},
-    {"time": "4:30-8:30", "activity": "Benji deep work - UI mockups + core offerings + video labelling", "category": "career"},
-    {"time": "8:30-9:00", "activity": "Call with Elbert", "category": "career"},
-    {"time": "9:00-11:00", "activity": "Benji - 20 videos labelled + open source model research", "category": "career"},
-    {"time": "11:00-12:00", "activity": "Coffee Chat - Bernado & Humayd @ Caffe Strada", "category": "career"},
-    {"time": "12:00-14:00", "activity": "Benji - open source model switch + UI mockup finalization", "category": "career"},
-    {"time": "14:00-14:30", "activity": "Scripture Reflection - Proverbs 2 (30 min quiet time)", "category": "faith"},
-    {"time": "14:30-17:00", "activity": "Benji - video labelling + core offerings doc", "category": "career"},
-    {"time": "17:00-19:30", "activity": "SportsTech Challenge Lab", "category": "career"},
-    {"time": "19:30+", "activity": "CRU weekly meeting + Worship after", "category": "faith"},
-    {"time": "22:00", "activity": "Lights out - HARD STOP", "category": "personal"}
+    { "time": "4:00 AM", "activity": "Wake up + Proverbs 2 read ✅", "category": "faith", "type": "fixed", "status": "done" },
+    { "time": "4:10–5:10 AM", "activity": "Bible quiz (NotebookLM) + Prayer", "category": "faith", "type": "fixed", "status": "done" },
+    { "time": "5:10–6:00 AM", "activity": "Morning planning session (Command Center)", "category": "career", "type": "fixed", "status": "done" },
+    { "time": "6:00–8:00 AM", "activity": "REST DAY — Light walk or stretch", "category": "fitness", "type": "fixed", "status": "upcoming" },
+    { "time": "8:30–9:00 AM", "activity": "Daily Family Connect", "category": "personal", "type": "fixed", "status": "upcoming" },
+    { "time": "9:00–12:00 PM", "activity": "Benji — UI Mockups + Core Offerings", "category": "career", "type": "deep_work", "status": "upcoming" },
+    { "time": "12:00–1:00 PM", "activity": "Elbert call (Benji)", "category": "career", "type": "meeting", "status": "upcoming" },
+    { "time": "1:00–2:00 PM", "activity": "Lunch break + rest", "category": "personal", "type": "buffer", "status": "upcoming" },
+    { "time": "2:00–2:30 PM", "activity": "Scripture Reflection — Proverbs 2", "category": "faith", "type": "fixed", "status": "upcoming" },
+    { "time": "2:30–5:00 PM", "activity": "Benji — Label 20 videos + open source model research", "category": "career", "type": "deep_work", "status": "upcoming" },
+    { "time": "5:00–5:30 PM", "activity": "Bernado coffee chat", "category": "career", "type": "networking", "status": "upcoming" },
+    { "time": "5:30–7:00 PM", "activity": "SportsTech Challenge Lab / coursework", "category": "academic", "type": "class", "status": "upcoming" },
+    { "time": "7:30–9:30 PM", "activity": "CRU Weekly Meeting + Worship", "category": "faith", "type": "fixed", "status": "upcoming" },
+    { "time": "9:30–10:00 PM", "activity": "Evening planning session + wind down", "category": "personal", "type": "fixed", "status": "upcoming" },
+    { "time": "10:00 PM", "activity": "Lights out 🌙", "category": "personal", "type": "fixed", "status": "upcoming" }
   ],
   "tasks": [
-    {"name": "Proverbs 2 read at 4 AM", "category": "faith", "priority": "high", "status": "done"},
-    {"name": "Benji - UI Mockups completed", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "Benji - Core offerings defined (1-pager)", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "Benji - 20 videos labelled", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "Benji - Research open source model (MediaPipe / MoveNet / OpenPose)", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "Call with Elbert (8:30 AM)", "category": "career", "priority": "medium", "status": "not_started"},
-    {"name": "Coffee Chat - Bernado & Humayd @ Caffe Strada (11 AM)", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "Scripture Reflection - Proverbs 2 (2 PM, 30 min)", "category": "faith", "priority": "high", "status": "not_started"},
-    {"name": "SportsTech Challenge Lab (5-7:30 PM)", "category": "career", "priority": "high", "status": "not_started"},
-    {"name": "CRU weekly meeting + Worship", "category": "faith", "priority": "high", "status": "not_started"},
-    {"name": "Lights out by 10 PM sharp", "category": "personal", "priority": "high", "status": "not_started"}
+    { "id": 1, "task": "Read Proverbs 2 (4 AM) ✅", "category": "faith", "status": "done", "priority": "high" },
+    { "id": 2, "task": "UI Mockups completed", "category": "career", "status": "pending", "priority": "high" },
+    { "id": 3, "task": "Core offerings defined", "category": "career", "status": "pending", "priority": "high" },
+    { "id": 4, "task": "Label 20 videos", "category": "career", "status": "pending", "priority": "high" },
+    { "id": 5, "task": "Research open source unbiased pose model (MediaPipe/MoveNet/OpenPose)", "category": "career", "status": "pending", "priority": "high" },
+    { "id": 6, "task": "Elbert call (Benji)", "category": "career", "status": "pending", "priority": "medium" },
+    { "id": 7, "task": "Bernado coffee chat", "category": "career", "status": "pending", "priority": "medium" },
+    { "id": 8, "task": "30-min Scripture Reflection — Proverbs 2 (2 PM)", "category": "faith", "status": "pending", "priority": "high" },
+    { "id": 9, "task": "SportsTech Challenge Lab", "category": "academic", "status": "pending", "priority": "medium" },
+    { "id": 10, "task": "CRU Weekly Meeting + Worship (7:30 PM)", "category": "faith", "status": "pending", "priority": "high" },
+    { "id": 11, "task": "Lights out by 10:00 PM sharp", "category": "personal", "status": "pending", "priority": "high" }
   ],
   "milestones": [
-    {"week": 1, "theme": "Foundation & Pipeline", "dates": "Mar 30 - Apr 5", "kpis": "10 videos analyzed, 5 coach names, dev env running", "status": "current"},
-    {"week": 2, "theme": "MVP Core Build", "dates": "Apr 6 - Apr 12", "kpis": "50 videos, 10 emails sent, pipeline demo", "status": "upcoming"},
-    {"week": 3, "theme": "Validation & Traction", "dates": "Apr 13 - Apr 19", "kpis": "200 clips, 5 calls, live landing page", "status": "upcoming"},
-    {"week": 4, "theme": "Demo & Application", "dates": "Apr 20 - Apr 26", "kpis": "Demo video, draft app, 2+ testimonials", "status": "upcoming"},
-    {"week": 5, "theme": "Polish & Submit", "dates": "Apr 27 - May 3", "kpis": "YC submitted, 3+ accelerator apps sent", "status": "upcoming"}
+    { "week": 1, "dates": "Mar 29 – Apr 4", "theme": "Foundation", "kpi": "ML env set up, 50 videos analyzed, landing page live", "status": "in_progress" },
+    { "week": 2, "dates": "Apr 5 – Apr 11", "theme": "Pipeline", "kpi": "Pose detection running, 200 clips labelled, 5 coach calls done", "status": "upcoming" },
+    { "week": 3, "dates": "Apr 12 – Apr 18", "theme": "MVP", "kpi": "iOS app live, Supabase connected, demo video filmed", "status": "upcoming" },
+    { "week": 4, "dates": "Apr 19 – Apr 25", "theme": "Traction", "kpi": "3 pilots confirmed, YC app 80% done, 10 coach emails sent", "status": "upcoming" },
+    { "week": 5, "dates": "Apr 26 – May 4", "theme": "Submit", "kpi": "YC application submitted by May 4, 8 PM PT", "status": "upcoming" }
   ],
   "affirmations": [
     "I am building something that will change how coaches develop athletes. God has placed this vision in me for a reason.",
-    "I am disciplined, focused, and relentless. I do not waste time - every hour moves me closer to my goal.",
+    "I am disciplined, focused, and relentless. I do not waste time — every hour moves me closer to my goal.",
     "I am not behind. I am exactly where God needs me to be, and I will steward this season with excellence.",
-    "I ship fast, talk to users, and iterate. Perfection is the enemy - progress is the standard.",
+    "I ship fast, talk to users, and iterate. Perfection is the enemy — progress is the standard.",
     "My body is my instrument. I train it, fuel it, and rest it so I can perform at my best.",
     "I am a founder. I solve problems, build products, and create value. This is who I am becoming.",
-    "I trust God's timing. I work as if it depends on me and pray as if it depends on Him.",
-    "Today I will do one thing that scares me - one conversation, one cold email, one bold ask.",
+    "I trust God’s timing. I work as if it depends on me and pray as if it depends on Him.",
+    "Today I will do one thing that scares me — one conversation, one cold email, one bold ask.",
     "I am grateful for Berkeley, for this opportunity, for my family, and for the strength to pursue this dream.",
-    "36 days. No time to be perfect. Time to be real. Let's go."
+    "36 days. No time to be perfect. Time to be real. Let’s go."
   ],
   "daily_log": [
     {
@@ -112,9 +114,9 @@
       "date": "2026-03-30", "day_name": "Monday", "sprint_day": 2,
       "summary": "Productive. Presented in Decal. Dinner meeting done. Gym skipped.",
       "bible": "Isaiah 2", "affirmation_index": 1,
-      "tasks_completed": ["Bible - Isaiah 2", "Class presentation", "Decal presentation", "Dinner meeting"],
-      "tasks_incomplete": ["Gym - Push Day", "Benji ML pipeline"],
-      "notes": "Good execution. Gym skipped - evening fully booked."
+      "tasks_completed": ["Bible – Isaiah 2", "Class presentation", "Decal presentation", "Dinner meeting"],
+      "tasks_incomplete": ["Gym – Push Day", "Benji ML pipeline"],
+      "notes": "Good execution. Gym skipped – evening fully booked."
     },
     {
       "date": "2026-03-31", "day_name": "Tuesday", "sprint_day": 3,
@@ -122,15 +124,15 @@
       "bible": "Isaiah 3 (partial)", "affirmation_index": 2,
       "tasks_completed": ["Benji at Ehub", "PM class", "RNLS", "Conversation with Guido Appenzeller"],
       "tasks_incomplete": ["Gym", "Benji evening session", "Meal planning"],
-      "notes": "Key contact: Guido Appenzeller. Meal planning poor - flagged."
+      "notes": "Key contact: Guido Appenzeller. Meal planning poor – flagged."
     },
     {
       "date": "2026-04-01", "day_name": "Wednesday", "sprint_day": 4,
-      "summary": "Good day overall. SCET - Igor Marinelli talk. Brainstorm with Arryan. Call with Kevin. Met an athlete - good connection, limited info extracted. Missed class (exhausted). Stayed late, irregular meals. God showed grace - moving forward.",
+      "summary": "Good day overall. SCET – Igor Marinelli talk. Brainstorm with Arryan. Call with Kevin. Met an athlete – good connection, limited info extracted. Missed class (exhausted). Stayed late. Irregular meals.",
       "bible": "Isaiah 3 finish + Isaiah 4", "affirmation_index": 3,
-      "tasks_completed": ["Bible - Isaiah 3+4", "SCET - Igor Marinelli", "Brainstorm - Arryan", "Call - Kevin", "Athlete conversation"],
-      "tasks_incomplete": ["Class (missed)", "Gym - Legs Day", "Meal planning"],
-      "notes": "Athlete contact made - need better discovery questions next time. Committed to 10 PM sleep from now on. God's grace is sufficient — forward."
+      "tasks_completed": ["Bible – Isaiah 3+4", "SCET – Igor Marinelli", "Brainstorm – Arryan", "Call – Kevin", "Athlete conversation"],
+      "tasks_incomplete": ["Class (missed)", "Gym – Legs Day", "Meal planning"],
+      "notes": "God showed grace. Moving forward. Better discovery questions needed for athlete follow-up."
     }
   ]
 }
